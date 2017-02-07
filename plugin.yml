@@ -1,0 +1,10 @@
+name: ComputerMMORPG
+main: com.computerdude.epsilon.Main
+version: 1.0
+commands:
+   setlevel:
+      description: Sets the level of the Player!
+      usage: /<command>
+   getlevel:
+      description: Gets the level of the Player!
+      usage: /<command>
