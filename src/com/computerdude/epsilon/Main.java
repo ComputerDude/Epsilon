@@ -1,5 +1,6 @@
 package com.computerdude.epsilon;
 
+import com.computerdude.epsilon.command.CmdGetLevel;
 import com.computerdude.epsilon.command.CmdSetLevel;
 import com.computerdude.epsilon.game.Spawn;
 import com.computerdude.epsilon.player.Chat;
@@ -23,6 +24,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new MySQL(), this);
 
         getCommand("setlevel").setExecutor(new CmdSetLevel());
+        getCommand("getlevel").setExecutor(new CmdGetLevel());
     }
 
     @Override
