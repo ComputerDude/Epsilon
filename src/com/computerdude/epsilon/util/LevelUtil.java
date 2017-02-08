@@ -30,7 +30,7 @@ public class LevelUtil {
      * @param xp the player's experience for the current level.
      */
     public static void setXPBar(Player player, int level, int xp) {
-        player.setTotalExperience(level);
+        player.setLevel(level);
         player.setExp((float) xp / getXP(level));
     }
 
