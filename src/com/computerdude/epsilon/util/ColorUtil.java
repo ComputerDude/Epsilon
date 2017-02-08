@@ -16,8 +16,8 @@ public class ColorUtil {
      * Colorize and format a message.
      * @see #color(String)
      */
-    public static String colorf(String text, Object... params) {
-        return String.format(ChatColor.translateAlternateColorCodes('&', text), params);
+    public static String colorf(String text, Object... args) {
+        return String.format(ChatColor.translateAlternateColorCodes('&', text), args);
     }
 
 }
