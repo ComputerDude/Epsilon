@@ -8,3 +8,9 @@ commands:
     getlevel:
         description: Get your level
         usage: /getlevel [player]
+    setcoins:
+        description: Set your coin balance
+        usage: /setcoins <coins> [player]
+    getcoins:
+        descrption: Get your coin balance
+        usage: /getcoins [player]
