@@ -16,9 +16,9 @@ public class MySQL implements Listener {
 
     private static Connection con;
 
-    public static String SQL1 = Main.storageFile.getString("SQL-1");
-    public static String SQL2 = Main.storageFile.getString("SQL-2");
-    public static String SQL3 = Main.storageFile.getString("SQL-3");
+    public static String host = Main.storageFile.getString("host");
+    public static String username = Main.storageFile.getString("username");
+    public static String password = Main.storageFile.getString("password");
 
     public static void disconnect() {
 
@@ -36,7 +36,7 @@ public class MySQL implements Listener {
     public synchronized static void openConnection() {
 
         try {
-            con = DriverManager.getConnection(SQL1, SQL2, SQL3);
+            con = DriverManager.getConnection(host, username, password);
 
         } catch (SQLException e) {
             e.printStackTrace();
