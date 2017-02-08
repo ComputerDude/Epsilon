@@ -1,5 +1,6 @@
 package com.computerdude.epsilon.game;
 
+import com.computerdude.epsilon.util.LevelUtil;
 import com.computerdude.epsilon.util.MySQL;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ public class Spawn implements Listener {
 
         Player player = e.getPlayer();
 
-        player.setLevel(MySQL.getLevel(player));
+        LevelUtil.setXPBar(player, MySQL.getLevel(player), 0 /* FIXME Add XP tracking */);
 
         if (!player.hasPlayedBefore()) {
 
