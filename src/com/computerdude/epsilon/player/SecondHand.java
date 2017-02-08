@@ -15,7 +15,7 @@ public class SecondHand implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getInventory().getType() == InventoryType.PLAYER && e.getSlot() == 45) {
+        if (e.getInventory().getType() == InventoryType.CRAFTING && e.getSlot() == 40) {
             e.setCancelled(true);
         }
     }
