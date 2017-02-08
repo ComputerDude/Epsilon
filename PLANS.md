@@ -4,7 +4,7 @@ These are our plans for Project Epsilon; all plans are subject to change.
 
 ## Economy
 
-The currency may be called "Epsilonian Credits."
+The currency may be called "Epsilonian Credits." They will probably be stored in a virtual balance, instead of items in the inventory. They are currently internally called "coins."
 
 ## Geography
 
