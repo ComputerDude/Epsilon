@@ -10,25 +10,18 @@ import static com.computerdude.epsilon.util.ColorUtil.color;
 import static com.computerdude.epsilon.util.ColorUtil.colorf;
 
 /**
- * The {@code /setlevel} command sets your current level.
+ * The {@code /getlevel} command gets your (or someone else's) current level.
  */
-public class CmdSetLevel implements CommandExecutor {
+public class CmdGetLevel implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length == 0 || args.length > 2) {
+        if (args.length > 1) {
             sender.sendMessage(colorf("&4/%s <level> [player]", label));
             return true;
         }
-        final int amount;
         final Player target;
-        try {
-            amount = Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            sender.sendMessage(color("&4That is not a number!"));
-            return true;
-        }
-        if (args.length >= 2) {
+        if (args.length == 1) {
             target = Bukkit.getPlayer(args[1]);
             if (target == null) {
                 sender.sendMessage(color("&4Player not found!"));
@@ -36,13 +29,13 @@ public class CmdSetLevel implements CommandExecutor {
             }
         } else {
             if (!(sender instanceof Player)) {
-                sender.sendMessage("&4You must choose whose level to change!");
+                sender.sendMessage("&4You must choose whose level to get!");
                 return true;
             }
             target = (Player) sender;
         }
-        MySQL.setLevel(target, amount);
-        sender.sendMessage(colorf("&aChanged %s's level to %d.", target.getName(), amount));
+        sender.sendMessage(colorf("&a%s is level %d.", target.getName(), MySQL.getLevel(target)));
         return true;
     }
+
 }
