@@ -20,14 +20,14 @@ The currency may be called "Epsilonian Credits." They will probably be stored in
 * City: **Mordomia** Lv. 55
 * City: **Forna** Lv. 70
 
-### Tharin
+### Province: Tharin
 
 * City: **Mira** Lv. 75
 * City: **Zaleb** Lv. 85
 * City: **Terna** Lv. 100
 
-### Portan
+### Province: Portan
 
 * City: **Borken** Lv. 105
 * City: **Erra** Lv. 120
-* City: **Noll** Lv. 130 <!-- god dammit blaze -->
+* City: **Noll** Lv. 130
