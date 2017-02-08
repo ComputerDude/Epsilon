@@ -24,11 +24,8 @@ public class MySQL implements Listener {
 
         try {
             if (con != null && !con.isClosed()) con.close();
-
         } catch (Exception e) {
-
             e.printStackTrace();
-
         }
 
     }

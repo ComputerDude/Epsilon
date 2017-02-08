@@ -5,7 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import static com.computerdude.epsilon.Main.color;
+import static com.computerdude.epsilon.util.ColorUtil.color;
+import static com.computerdude.epsilon.util.ColorUtil.colorf;
 
 /**
  * The {@code /setlevel} command sets your current level.
@@ -30,7 +31,7 @@ public class CmdSetLevel implements CommandExecutor {
                 return true;
             }
             MySQL.setLevel(player, amount);
-            player.sendMessage(color("Changed level to " + args[0]));
+            player.sendMessage(colorf("&aChanged level to %s.", args[0]));
         }
         return true;
     }
