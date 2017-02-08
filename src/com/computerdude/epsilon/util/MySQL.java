@@ -30,7 +30,7 @@ public class MySQL implements Listener {
 
     }
 
-    public synchronized static void openConnection() {
+    public static synchronized void openConnection() {
 
         try {
             con = DriverManager.getConnection(host, username, password);
@@ -41,7 +41,7 @@ public class MySQL implements Listener {
 
     }
 
-    public synchronized static void closeConnection() {
+    public static synchronized void closeConnection() {
 
         try {
             con.close();
@@ -52,7 +52,7 @@ public class MySQL implements Listener {
 
     }
 
-    public synchronized static boolean playerDataContainsPlayer(Player player) {
+    public static synchronized boolean playerDataContainsPlayer(Player player) {
 
         try {
             PreparedStatement sql = con.prepareStatement("SELECT * FROM `player_data` WHERE uuid=?;");
