@@ -17,7 +17,7 @@ public class CmdGetLevel implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length > 1) {
-            sender.sendMessage(colorf("&4/%s <level> [player]", label));
+            sender.sendMessage(colorf("&4/%s [player]", label));
             return true;
         }
         final Player target;
