@@ -2,6 +2,10 @@
 
 These are our plans for Project Epsilon; all plans are subject to change.
 
+## Economy
+
+The currency may be called "Epsilonian Credits."
+
 ## Geography
 
 ### Province: Zago
