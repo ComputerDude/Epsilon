@@ -20,6 +20,26 @@ public class MySQL implements Listener {
     public static String username = Main.storageFile.getString("username");
     public static String password = Main.storageFile.getString("password");
 
+    public static void createTables() {
+        openConnection();
+        try {
+            final PreparedStatement statement = con.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS player_data(" +
+                    "uuid CHAR(36) NOT NULL, " +
+                    "player VARCHAR(16) NOT NULL, " +
+                    "coins BIGINT NOT NULL DEFAULT 0, " +
+                    "level INT NOT NULL DEFAULT 1, " +
+                    "exp BIGINT NOT NULL DEFAULT 0);"
+            );
+            statement.execute();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
     public static void disconnect() {
 
         try {
@@ -72,26 +92,6 @@ public class MySQL implements Listener {
 
     }
 
-    public static void setCoins(Player player, int coins) {
-
-        openConnection();
-        try {
-
-            PreparedStatement coinUpdate = con.prepareStatement("UPDATE `player_data` SET coins=? WHERE uuid=?");
-            coinUpdate.setInt(1, coins);
-            coinUpdate.setString(2, player.getUniqueId().toString());
-            coinUpdate.executeUpdate();
-
-            coinUpdate.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-
-    }
-
     public static int getCoins(Player player) {
 
         int coins = 0;
@@ -115,6 +115,26 @@ public class MySQL implements Listener {
             closeConnection();
         }
         return coins;
+    }
+
+    public static void setCoins(Player player, int coins) {
+
+        openConnection();
+        try {
+
+            PreparedStatement coinUpdate = con.prepareStatement("UPDATE `player_data` SET coins=? WHERE uuid=?");
+            coinUpdate.setInt(1, coins);
+            coinUpdate.setString(2, player.getUniqueId().toString());
+            coinUpdate.executeUpdate();
+
+            coinUpdate.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
     }
 
     public static int getLevel(Player player) {
