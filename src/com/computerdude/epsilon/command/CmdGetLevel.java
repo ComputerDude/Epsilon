@@ -22,14 +22,14 @@ public class CmdGetLevel implements CommandExecutor {
         }
         final Player target;
         if (args.length == 1) {
-            target = Bukkit.getPlayer(args[1]);
+            target = Bukkit.getPlayer(args[0]);
             if (target == null) {
                 sender.sendMessage(color("&4Player not found!"));
                 return true;
             }
         } else {
             if (!(sender instanceof Player)) {
-                sender.sendMessage("&4You must choose whose level to get!");
+                sender.sendMessage(color("&4You must choose whose level to get!"));
                 return true;
             }
             target = (Player) sender;
