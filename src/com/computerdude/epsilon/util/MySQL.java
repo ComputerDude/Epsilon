@@ -40,7 +40,7 @@ public class MySQL implements Listener {
                     "exp BIGINT NOT NULL DEFAULT 0);"
             );
             statement.setString(1, databaseName);
-            statement.setString(1, databaseName);
+            statement.setString(2, databaseName);
             statement.execute();
             statement.close();
         } catch (Exception e) {
