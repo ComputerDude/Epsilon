@@ -1,5 +1,6 @@
 package com.computerdude.epsilon.command;
 
+import com.computerdude.epsilon.util.LevelUtil;
 import com.computerdude.epsilon.util.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -35,9 +36,10 @@ public class CmdGetLevel implements CommandExecutor {
             target = (Player) sender;
         }
         final int level = MySQL.getLevel(target);
-        final long exp = (Long) MySQL.getProperty(target, "exp");
+        final long exp = MySQL.getProperty(target, "exp");
         sender.sendMessage(colorf("&a%s is level %d with %d/%d (%.3f%%) experience.",
-                                  target.getName(), level, exp, LevelUtil.getXP(level), (double) exp / LevelUtil.getXP(level));
+                                  target.getName(), level, exp, LevelUtil.getXP(level), (double) exp / LevelUtil
+                        .getXP(level)));
         return true;
     }
 
