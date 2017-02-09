@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import com.computerdude.epsilon.Main;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,18 +21,26 @@ public class MySQL implements Listener {
     public static String host = Main.storageFile.getString("host");
     public static String username = Main.storageFile.getString("username");
     public static String password = Main.storageFile.getString("password");
+    public static String databaseName = Main.storageFile.getString("database-name");
 
+    /**
+     * Create the database and tables if necessary.
+     */
     public static void createTables() {
         openConnection();
         try {
             final PreparedStatement statement = con.prepareStatement(
+                    "CREATE DATABASE IF NOT EXISTS ?; " +
+                    "USE ?; " +
                     "CREATE TABLE IF NOT EXISTS player_data(" +
                     "uuid CHAR(36) NOT NULL, " +
                     "player VARCHAR(16) NOT NULL, " +
                     "coins BIGINT NOT NULL DEFAULT 0, " +
                     "level INT NOT NULL DEFAULT 1, " +
-                    "exp BIGINT NOT NULL DEFAULT 0)"
+                    "exp BIGINT NOT NULL DEFAULT 0);"
             );
+            statement.setString(1, databaseName);
+            statement.setString(1, databaseName);
             statement.execute();
             statement.close();
         } catch (Exception e) {
@@ -92,17 +102,23 @@ public class MySQL implements Listener {
 
     }
 
+    public static <T> T getProperty(OfflinePlayer player, String key) throws ClassCastException {
+        return getProperty(player.getUniqueId(), key);
+    }
+
     @SuppressWarnings("unchecked")
-    public static <T> T getProperty(Player player, String key) throws ClassCastException {
+    public static <T> T getProperty(UUID uuid, String key) throws ClassCastException {
         final T value;
         openConnection();
         try {
-            PreparedStatement sql = con.prepareStatement("SELECT ? FROM `player_data` WHERE uuid=?");
-            sql.setString(1, key);
-            sql.setString(2, player.getUniqueId().toString());
+            PreparedStatement sql = con.prepareStatement("USE ?; SELECT ? FROM `player_data` WHERE uuid=?");
+            sql.setString(1, databaseName);
+            sql.setString(2, key);
+            sql.setString(3, uuid.toString());
             ResultSet set = sql.executeQuery();
             set.next();
             value = (T) set.getObject("level");
+            set.close();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -112,13 +128,18 @@ public class MySQL implements Listener {
         return value;
     }
 
-    public static <T> void setProperty(Player player, String key, T value) throws ClassCastException {
+    public static <T> void setProperty(OfflinePlayer player, String key, T value) throws ClassCastException {
+        setProperty(player.getUniqueId(), key, value);
+    }
+
+    public static <T> void setProperty(UUID uuid, String key, T value) throws ClassCastException {
         openConnection();
         try {
-            PreparedStatement sql = con.prepareStatement("UPDATE `player_data` SET ?=? WHERE uuid=?");
-            sql.setString(1, key);
-            sql.setObject(2, value);
-            sql.setString(3, player.getUniqueId().toString());
+            PreparedStatement sql = con.prepareStatement("USE ?; UPDATE `player_data` SET ?=? WHERE uuid=?");
+            sql.setString(1, databaseName);
+            sql.setString(2, key);
+            sql.setObject(3, value);
+            sql.setString(4, uuid.toString());
             sql.execute();
             sql.close();
         } catch (Exception e) {
@@ -129,136 +150,43 @@ public class MySQL implements Listener {
     }
 
     public static int getCoins(Player player) {
-
-        int coins = 0;
-
-        openConnection();
-        try {
-
-            PreparedStatement sql = con.prepareStatement("SELECT coins FROM `player_data` WHERE uuid=?");
-            sql.setString(1, player.getUniqueId().toString());
-
-            ResultSet rs = sql.executeQuery();
-            rs.next();
-
-            coins = rs.getInt("coins");
-
-            rs.close();
-            sql.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-        return coins;
+        return getProperty(player, "coins");
     }
 
     public static void setCoins(Player player, int coins) {
-
-        openConnection();
-        try {
-
-            PreparedStatement coinUpdate = con.prepareStatement("UPDATE `player_data` SET coins=? WHERE uuid=?");
-            coinUpdate.setInt(1, coins);
-            coinUpdate.setString(2, player.getUniqueId().toString());
-            coinUpdate.executeUpdate();
-
-            coinUpdate.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-
+        setProperty(player, "coins", coins);
     }
 
     public static int getLevel(Player player) {
-
-        int level = 0;
-
-        openConnection();
-
-        try {
-
-            PreparedStatement sql = con.prepareStatement("SELECT level FROM `player_data` WHERE uuid=?");
-            sql.setString(1, player.getUniqueId().toString());
-
-            ResultSet rs = sql.executeQuery();
-            rs.next();
-
-            level = rs.getInt("level");
-
-            rs.close();
-            sql.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-
-        return level;
+        return getProperty(player, "level");
     }
 
     public static void setLevel(Player player, int level) {
-
-        openConnection();
-        try {
-
-            PreparedStatement levelUpdate = con.prepareStatement("UPDATE `player_data` SET level=? WHERE uuid=?");
-            levelUpdate.setInt(1, level);
-            levelUpdate.setString(2, player.getUniqueId().toString());
-            levelUpdate.executeUpdate();
-
-            levelUpdate.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
+        setProperty(player, "level", level);
     }
 
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent e) {
-
         openConnection();
         try {
-
-            String lastName = "";
-
+            String lastName = null;
             if (playerDataContainsPlayer(e.getPlayer())) {
-                PreparedStatement sql = con.prepareStatement("SELECT player FROM `player_data` WHERE uuid=?");
-                sql.setString(1, e.getPlayer().getUniqueId().toString());
-
-                ResultSet rs = sql.executeQuery();
-                rs.next();
-
-                // lastName = rs.getString("player");
-
-                PreparedStatement nameUpdate = con.prepareStatement("UPDATE `player_data` SET player=? WHERE uuid=?");
-                nameUpdate.setString(1, e.getPlayer().getName());
-                nameUpdate.setString(2, e.getPlayer().getUniqueId().toString());
-                nameUpdate.executeUpdate();
-
-                nameUpdate.close();
-                sql.close();
-                rs.close();
+                // lastName = getProperty(e.getPlayer(), "player");
+                setProperty(e.getPlayer(), "player", e.getPlayer().getName());
             } else {
-                PreparedStatement newPlayer = con.prepareStatement("INSERT INTO `player_data` values(?,?,0,1,0);");
-                newPlayer.setString(1, e.getPlayer().getName());
-                newPlayer.setString(2, e.getPlayer().getUniqueId().toString());
-                newPlayer.execute();
-                newPlayer.close();
+                PreparedStatement sql = con.prepareStatement("USE ?; INSERT INTO `player_data` VALUES(?,?, NULL, " +
+                        "NULL, NULL, NULL);");
+                sql.setString(1, databaseName);
+                sql.setString(2, e.getPlayer().getUniqueId().toString());
+                sql.setString(3, e.getPlayer().getName());
+                sql.execute();
+                sql.close();
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeConnection();
         }
-
     }
 
 }
