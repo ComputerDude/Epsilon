@@ -29,6 +29,8 @@ public class Main extends JavaPlugin {
         getCommand("getlevel").setExecutor(new CmdGetLevel());
         getCommand("setcoins").setExecutor(new CmdSetCoins());
         getCommand("getcoins").setExecutor(new CmdGetCoins());
+
+        MySQL.createTables();
     }
 
     @Override
