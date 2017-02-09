@@ -24,23 +24,22 @@ public class MySQL implements Listener {
     public static String databaseName = Main.storageFile.getString("database-name");
 
     /**
-     * Create the database and tables if necessary.
+     * Create the tables if necessary. Will not create the database (I can't figure out how to do that without an SQL
+     * syntax error).
      */
     public static void createTables() {
         openConnection();
         try {
+            // It turns out you can't really create a database without having an SQL injection vulnerability.
+            // So I give up on creating the database. You're gonna have to create it manually.
             final PreparedStatement statement = con.prepareStatement(
-                    "CREATE DATABASE IF NOT EXISTS ?; " +
-                    "USE ?; " +
-                    "CREATE TABLE IF NOT EXISTS player_data(" +
-                    "uuid CHAR(36) NOT NULL, " +
-                    "player VARCHAR(16) NOT NULL, " +
-                    "coins BIGINT NOT NULL DEFAULT 0, " +
-                    "level INT NOT NULL DEFAULT 1, " +
+                    "CREATE TABLE IF NOT EXISTS player_data(\n" +
+                    "uuid CHAR(36) NOT NULL,\n" +
+                    "player VARCHAR(16) NOT NULL,\n" +
+                    "coins BIGINT NOT NULL DEFAULT 0,\n" +
+                    "level INT NOT NULL DEFAULT 1,\n" +
                     "exp BIGINT NOT NULL DEFAULT 0);"
             );
-            statement.setString(1, databaseName);
-            statement.setString(2, databaseName);
             statement.execute();
             statement.close();
         } catch (Exception e) {
@@ -61,14 +60,12 @@ public class MySQL implements Listener {
     }
 
     public static synchronized void openConnection() {
-
         try {
             con = DriverManager.getConnection(host, username, password);
-
+            con.setCatalog(databaseName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public static synchronized void closeConnection() {
@@ -111,10 +108,9 @@ public class MySQL implements Listener {
         final T value;
         openConnection();
         try {
-            PreparedStatement sql = con.prepareStatement("USE ?; SELECT ? FROM `player_data` WHERE uuid=?");
-            sql.setString(1, databaseName);
-            sql.setString(2, key);
-            sql.setString(3, uuid.toString());
+            PreparedStatement sql = con.prepareStatement("SELECT ? FROM `player_data` WHERE uuid=?");
+            sql.setString(1, key);
+            sql.setString(2, uuid.toString());
             ResultSet set = sql.executeQuery();
             set.next();
             value = (T) set.getObject("level");
@@ -135,11 +131,10 @@ public class MySQL implements Listener {
     public static <T> void setProperty(UUID uuid, String key, T value) throws ClassCastException {
         openConnection();
         try {
-            PreparedStatement sql = con.prepareStatement("USE ?; UPDATE `player_data` SET ?=? WHERE uuid=?");
-            sql.setString(1, databaseName);
-            sql.setString(2, key);
-            sql.setObject(3, value);
-            sql.setString(4, uuid.toString());
+            PreparedStatement sql = con.prepareStatement("UPDATE `player_data` SET ?=? WHERE uuid=?");
+            sql.setString(1, key);
+            sql.setObject(2, value);
+            sql.setString(3, uuid.toString());
             sql.execute();
             sql.close();
         } catch (Exception e) {
@@ -174,11 +169,10 @@ public class MySQL implements Listener {
                 // lastName = getProperty(e.getPlayer(), "player");
                 setProperty(e.getPlayer(), "player", e.getPlayer().getName());
             } else {
-                PreparedStatement sql = con.prepareStatement("USE ?; INSERT INTO `player_data` VALUES(?, ?, NULL, " +
+                PreparedStatement sql = con.prepareStatement("INSERT INTO `player_data` VALUES(?, ?, NULL, " +
                         "NULL, NULL, NULL);");
-                sql.setString(1, databaseName);
-                sql.setString(2, e.getPlayer().getUniqueId().toString());
-                sql.setString(3, e.getPlayer().getName());
+                sql.setString(1, e.getPlayer().getUniqueId().toString());
+                sql.setString(2, e.getPlayer().getName());
                 sql.execute();
                 sql.close();
             }
