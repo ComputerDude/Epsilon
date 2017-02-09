@@ -29,7 +29,7 @@ public class MySQL implements Listener {
                     "player VARCHAR(16) NOT NULL, " +
                     "coins BIGINT NOT NULL DEFAULT 0, " +
                     "level INT NOT NULL DEFAULT 1, " +
-                    "exp BIGINT NOT NULL DEFAULT 0);"
+                    "exp BIGINT NOT NULL DEFAULT 0)"
             );
             statement.execute();
             statement.close();
@@ -90,6 +90,42 @@ public class MySQL implements Listener {
             return false;
         }
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getProperty(Player player, String key) throws ClassCastException {
+        final T value;
+        openConnection();
+        try {
+            PreparedStatement sql = con.prepareStatement("SELECT ? FROM `player_data` WHERE uuid=?");
+            sql.setString(1, key);
+            sql.setString(2, player.getUniqueId().toString());
+            ResultSet set = sql.executeQuery();
+            set.next();
+            value = (T) set.getObject("level");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeConnection();
+        }
+        return value;
+    }
+
+    public static <T> void setProperty(Player player, String key, T value) throws ClassCastException {
+        openConnection();
+        try {
+            PreparedStatement sql = con.prepareStatement("UPDATE `player_data` SET ?=? WHERE uuid=?");
+            sql.setString(1, key);
+            sql.setObject(2, value);
+            sql.setString(3, player.getUniqueId().toString());
+            sql.execute();
+            sql.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
     }
 
     public static int getCoins(Player player) {
