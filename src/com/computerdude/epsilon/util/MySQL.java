@@ -174,7 +174,7 @@ public class MySQL implements Listener {
                 // lastName = getProperty(e.getPlayer(), "player");
                 setProperty(e.getPlayer(), "player", e.getPlayer().getName());
             } else {
-                PreparedStatement sql = con.prepareStatement("USE ?; INSERT INTO `player_data` VALUES(?,?, NULL, " +
+                PreparedStatement sql = con.prepareStatement("USE ?; INSERT INTO `player_data` VALUES(?, ?, NULL, " +
                         "NULL, NULL, NULL);");
                 sql.setString(1, databaseName);
                 sql.setString(2, e.getPlayer().getUniqueId().toString());
