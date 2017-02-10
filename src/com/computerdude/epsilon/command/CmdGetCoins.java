@@ -32,7 +32,7 @@ public class CmdGetCoins implements CommandExecutor {
             target = (Player) sender;
         }
         sender.sendMessage(colorf("&a%s has %d coins.", target.getName(), MySQL.getCoins(target)));
-        return false;
+        return true;
     }
 
 }

@@ -143,7 +143,7 @@ public class MySQL implements Listener {
         }
     }
 
-    public static int getCoins(Player player) {
+    public static long getCoins(Player player) {
         return getProperty(player, "coins");
     }
 
