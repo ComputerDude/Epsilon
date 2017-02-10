@@ -10,15 +10,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Spawn implements Listener {
 
+    public static final int[] SPAWN = {0, 90, 0};
+
     @EventHandler
     public static void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        LevelUtil.setXPBar(player, MySQL.getLevel(player), 0 /* FIXME Add XP tracking */);
+        LevelUtil.setXPBar(player, MySQL.getLevel(player), MySQL.getProperty(player, "exp"));
         if (!player.hasPlayedBefore()) {
-            double xz = 0;
-            double y = 90;
-
-            Location loc = new Location(e.getPlayer().getWorld(), xz, y, xz);
+            Location loc = new Location(e.getPlayer().getWorld(), SPAWN[0], SPAWN[1], SPAWN[2]);
             player.teleport(loc);
         }
     }
