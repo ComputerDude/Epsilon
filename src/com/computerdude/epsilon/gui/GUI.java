@@ -12,8 +12,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
- * This class represents a graphical user interface (GUI) which is shown to a
- * player.
+ * This class represents a graphical user interface (GUI) which is shown to a player.
  *
  * @author null
  */
