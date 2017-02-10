@@ -1,5 +1,6 @@
 package com.computerdude.epsilon.command;
 
+import com.computerdude.epsilon.util.LevelUtil;
 import com.computerdude.epsilon.util.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -16,20 +17,23 @@ public class CmdSetLevel implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length == 0 || args.length > 2) {
-            sender.sendMessage(colorf("&4/%s <level> [player]", label));
+        if (args.length == 0 || args.length > 3) {
+            sender.sendMessage(colorf("&4/%s <level> [xp] [player]", label));
             return true;
         }
-        final int amount;
+        final int level;
+        final long xp;
         final Player target;
         try {
-            amount = Integer.parseInt(args[0]);
+            level = Integer.parseInt(args[0]);
+            if (args.length > 1) xp = Long.parseLong(args[1]);
+            else xp = 0;
         } catch (NumberFormatException e) {
             sender.sendMessage(color("&4That is not a number!"));
             return true;
         }
-        if (args.length >= 2) {
-            target = Bukkit.getPlayer(args[1]);
+        if (args.length > 2) {
+            target = Bukkit.getPlayer(args[2]);
             if (target == null) {
                 sender.sendMessage(color("&4Player not found!"));
                 return true;
@@ -41,8 +45,10 @@ public class CmdSetLevel implements CommandExecutor {
             }
             target = (Player) sender;
         }
-        MySQL.setLevel(target, amount);
-        sender.sendMessage(colorf("&aChanged %s's level to %d.", target.getName(), amount));
+        MySQL.setLevel(target, level);
+        MySQL.setProperty(target, "exp", xp);
+        LevelUtil.setXPBar(target, level, xp);
+        sender.sendMessage(colorf("&aChanged %s's level to %d with %d experience.", target.getName(), level, xp));
         return true;
     }
 }
