@@ -39,7 +39,7 @@ public class CmdSetCoins implements CommandExecutor {
             target = (Player) sender;
         }
         MySQL.setCoins(target, amount);
-        sender.sendMessage(colorf("&aChanged %s's balance to %d.", target.getName(), amount));
+        sender.sendMessage(colorf("&aChanged %s's balance to %,d.", target.getName(), amount));
         return true;
     }
     

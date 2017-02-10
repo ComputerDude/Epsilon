@@ -48,7 +48,7 @@ public class CmdSetLevel implements CommandExecutor {
         MySQL.setLevel(target, level);
         MySQL.setProperty(target, "exp", xp);
         LevelUtil.setXPBar(target, level, xp);
-        sender.sendMessage(colorf("&aChanged %s's level to %d with %d experience.", target.getName(), level, xp));
+        sender.sendMessage(colorf("&aChanged %s's level to %d with %,d experience.", target.getName(), level, xp));
         return true;
     }
 }
