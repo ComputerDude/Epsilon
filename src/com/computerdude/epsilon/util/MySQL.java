@@ -34,11 +34,11 @@ public class MySQL implements Listener {
             // So I give up on creating the database. You're gonna have to create it manually.
             final PreparedStatement statement = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS player_data(\n" +
-                    "uuid CHAR(36) NOT NULL,\n" +
-                    "player VARCHAR(16) NOT NULL,\n" +
-                    "coins BIGINT NOT NULL DEFAULT 0,\n" +
-                    "level INT NOT NULL DEFAULT 1,\n" +
-                    "exp BIGINT NOT NULL DEFAULT 0);"
+                    "uuid CHAR(36) NOT NULL,\n" + // Player UUID
+                    "player VARCHAR(16) NOT NULL,\n" + // Cached player name
+                    "coins BIGINT NOT NULL DEFAULT 0,\n" + // Coins
+                    "level INT NOT NULL DEFAULT 1,\n" + // Level
+                    "exp BIGINT NOT NULL DEFAULT 0);" // Experience
             );
             statement.execute();
             statement.close();
@@ -108,12 +108,11 @@ public class MySQL implements Listener {
         final T value;
         openConnection();
         try {
-            PreparedStatement sql = con.prepareStatement("SELECT ? FROM `player_data` WHERE uuid=?");
-            sql.setString(1, key);
-            sql.setString(2, uuid.toString());
+            PreparedStatement sql = con.prepareStatement("SELECT `" + key + "` FROM `player_data` WHERE uuid=?");
+            sql.setString(1, uuid.toString());
             ResultSet set = sql.executeQuery();
             set.next();
-            value = (T) set.getObject("level");
+            value = (T) set.getObject(key);
             set.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,10 +130,10 @@ public class MySQL implements Listener {
     public static <T> void setProperty(UUID uuid, String key, T value) throws ClassCastException {
         openConnection();
         try {
-            PreparedStatement sql = con.prepareStatement("UPDATE `player_data` SET ?=? WHERE uuid=?");
-            sql.setString(1, key);
-            sql.setObject(2, value);
-            sql.setString(3, uuid.toString());
+            // FIXME fix sql injection
+            PreparedStatement sql = con.prepareStatement("UPDATE `player_data` SET `" + key + "`=? WHERE uuid=?");
+            sql.setObject(1, value);
+            sql.setString(2, uuid.toString());
             sql.execute();
             sql.close();
         } catch (Exception e) {
@@ -169,8 +168,8 @@ public class MySQL implements Listener {
                 // lastName = getProperty(e.getPlayer(), "player");
                 setProperty(e.getPlayer(), "player", e.getPlayer().getName());
             } else {
-                PreparedStatement sql = con.prepareStatement("INSERT INTO `player_data` VALUES(?, ?, NULL, " +
-                        "NULL, NULL, NULL);");
+                PreparedStatement sql = con.prepareStatement("INSERT INTO `player_data` VALUES(?, ?, DEFAULT, " +
+                        "DEFAULT, DEFAULT);");
                 sql.setString(1, e.getPlayer().getUniqueId().toString());
                 sql.setString(2, e.getPlayer().getName());
                 sql.execute();

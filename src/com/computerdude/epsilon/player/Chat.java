@@ -2,9 +2,7 @@ package com.computerdude.epsilon.player;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.computerdude.epsilon.util.MySQL;
 import org.bukkit.Location;
@@ -37,19 +35,12 @@ public class Chat implements Listener {
 
     }
 
-    private static final Map<Integer, Character> LEVEL_COLORS = new HashMap<Integer, Character>() {{
-        put(0, '7');
-        put(20, '7');
-        put(40, 'e');
-        put(60, '4');
-        put(80, '5');
-        put(100, '1');
-        put(120, '9');
-        put(140, 'b');
-    }};
+    private static final char[] COLORS = {'7', 'e', '4', '5', '1', '9', 'b'};
 
     public static void sendChatMessage(Entity en, String message, Player sender, int level) {
-        final char color = LEVEL_COLORS.get((int) (Math.ceil(level / 20.0) * 20.00001));
+        final char color;
+        if (level / 20 >= COLORS.length) color = COLORS[COLORS.length - 1];
+        else color = COLORS[level / 20];
         en.sendMessage(colorf("&" + color + "(%d) &f%s&7: &f%s", level, sender.getName(), message));
     }
 
