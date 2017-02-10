@@ -19,7 +19,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
-        PluginManager pm = Bukkit.getServer().getPluginManager();
+        final PluginManager pm = Bukkit.getServer().getPluginManager();
 
         pm.registerEvents(new Spawn(), this);
         pm.registerEvents(new Chat(), this);

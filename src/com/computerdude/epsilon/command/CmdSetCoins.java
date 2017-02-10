@@ -10,7 +10,7 @@ import static com.computerdude.epsilon.util.ColorUtil.color;
 import static com.computerdude.epsilon.util.ColorUtil.colorf;
 
 public class CmdSetCoins implements CommandExecutor {
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0 || args.length > 2) {
@@ -42,5 +42,5 @@ public class CmdSetCoins implements CommandExecutor {
         sender.sendMessage(colorf("&aChanged %s's balance to %,d.", target.getName(), amount));
         return true;
     }
-    
+
 }
