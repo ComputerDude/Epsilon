@@ -24,8 +24,8 @@ public class MySQL implements Listener {
     public static String databaseName = Main.storageFile.getString("database-name");
 
     /**
-     * Create the tables if necessary. Will not create the database (I can't figure out how to do that without an SQL
-     * syntax error).
+     * Create the tables if necessary. Will not create the database (TODO I can't figure out how to do that
+     * without an SQL syntax error).
      */
     public static void createTables() {
         openConnection();
