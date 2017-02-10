@@ -12,19 +12,14 @@ public class Spawn implements Listener {
 
     @EventHandler
     public static void onPlayerJoin(PlayerJoinEvent e) {
-
         Player player = e.getPlayer();
-
         LevelUtil.setXPBar(player, MySQL.getLevel(player), 0 /* FIXME Add XP tracking */);
-
         if (!player.hasPlayedBefore()) {
-
             double xz = 0;
             double y = 90;
 
             Location loc = new Location(e.getPlayer().getWorld(), xz, y, xz);
             player.teleport(loc);
-
         }
     }
 
