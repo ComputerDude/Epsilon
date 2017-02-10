@@ -37,9 +37,8 @@ public class CmdGetLevel implements CommandExecutor {
         }
         final int level = MySQL.getLevel(target);
         final long exp = MySQL.getProperty(target, "exp");
-        sender.sendMessage(colorf("&a%s is level %d with %,d/%,d (%.3f%%) experience.",
-                                  target.getName(), level, exp, LevelUtil.getXP(level), (double) exp / LevelUtil
-                        .getXP(level)));
+        sender.sendMessage(colorf("&a%s is level %d with %,d/%,d (%.3f%%) experience.", target.getName(), level, exp,
+                LevelUtil.getXP(level), 100.0 * exp / LevelUtil.getXP(level)));
         return true;
     }
 
