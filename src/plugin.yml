@@ -27,3 +27,6 @@ commands:
     adminmode:
         descrption: Toggles admin mode.
         usage: /adminmode
+    inventorysee:
+        descrption: View a players inventory.
+        usage: /inventorysee <player>
