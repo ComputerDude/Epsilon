@@ -15,3 +15,6 @@ commands:
     getcoins:
         descrption: Get your coin balance
         usage: /getcoins [player]
+    adminmode:
+        descrption: Toggles admin mode.
+        usage: /adminmode
