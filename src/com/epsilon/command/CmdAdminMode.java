@@ -1,12 +1,12 @@
-package com.computerdude.epsilon.command;
+package com.epsilon.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.computerdude.epsilon.administration.AdminMode;
-import com.computerdude.epsilon.player.EPlayer;
+import com.epsilon.administration.AdminMode;
+import com.epsilon.player.EPlayer;
 
 public class CmdAdminMode implements CommandExecutor {
 

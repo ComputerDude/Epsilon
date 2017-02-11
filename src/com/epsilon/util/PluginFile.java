@@ -1,4 +1,4 @@
-package com.computerdude.epsilon.util;
+package com.epsilon.util;
 
 import java.io.File;
 import java.io.IOException;

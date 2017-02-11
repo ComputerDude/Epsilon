@@ -1,4 +1,4 @@
-package com.computerdude.epsilon.gui;
+package com.epsilon.gui;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package com.computerdude.epsilon.ranks;
+package com.epsilon.ranks;
 
 public enum Rank {
 

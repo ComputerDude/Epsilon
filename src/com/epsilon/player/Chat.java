@@ -1,10 +1,11 @@
-package com.computerdude.epsilon.player;
+package com.epsilon.player;
+
+import static com.epsilon.util.ColorUtil.colorf;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.computerdude.epsilon.util.MySQL;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -12,7 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import static com.computerdude.epsilon.util.ColorUtil.colorf;
+
+import com.epsilon.util.MySQL;
 
 public class Chat implements Listener {
 

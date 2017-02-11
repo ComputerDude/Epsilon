@@ -1,4 +1,4 @@
-package com.computerdude.epsilon.player;
+package com.epsilon.player;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import com.computerdude.epsilon.util.LevelUtil;
-import com.computerdude.epsilon.util.MySQL;
+import com.epsilon.util.LevelUtil;
+import com.epsilon.util.MySQL;
 
 public class SpawnHandler implements Listener {
 

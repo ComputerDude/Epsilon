@@ -1,13 +1,15 @@
-package com.computerdude.epsilon.command;
+package com.epsilon.command;
 
-import com.computerdude.epsilon.util.MySQL;
+import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import static com.computerdude.epsilon.util.ColorUtil.color;
-import static com.computerdude.epsilon.util.ColorUtil.colorf;
+
+import com.epsilon.util.MySQL;
 
 public class CmdSetCoins implements CommandExecutor {
 

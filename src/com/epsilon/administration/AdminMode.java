@@ -1,8 +1,8 @@
-package com.computerdude.epsilon.administration;
+package com.epsilon.administration;
 
 import org.bukkit.entity.Player;
 
-import com.computerdude.epsilon.Epsilon;
+import com.epsilon.Epsilon;
 
 public class AdminMode {
 

@@ -1,12 +1,12 @@
-package com.computerdude.epsilon.player;
+package com.epsilon.player;
 
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import com.computerdude.epsilon.ranks.Rank;
-import com.computerdude.epsilon.util.ColorUtil;
-import com.computerdude.epsilon.util.MySQL;
+import com.epsilon.ranks.Rank;
+import com.epsilon.util.ColorUtil;
+import com.epsilon.util.MySQL;
 
 public class EPlayer {
 	

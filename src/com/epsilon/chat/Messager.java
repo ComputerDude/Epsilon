@@ -1,4 +1,5 @@
-package com.computerdude.epsilon.chat;
+package com.epsilon.chat;
+
 /**
  * A class for sending colored and formated messages.
  * @author JustBru00

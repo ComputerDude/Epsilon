@@ -1,4 +1,4 @@
-package com.computerdude.epsilon.util;
+package com.epsilon.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,12 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import com.computerdude.epsilon.Epsilon;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+
+import com.epsilon.Epsilon;
 
 public class MySQL implements Listener {
 
