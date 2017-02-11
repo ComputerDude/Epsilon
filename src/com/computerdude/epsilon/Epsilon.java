@@ -1,16 +1,17 @@
 package com.computerdude.epsilon;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.computerdude.epsilon.command.CmdGetCoins;
 import com.computerdude.epsilon.command.CmdGetLevel;
 import com.computerdude.epsilon.command.CmdSetCoins;
 import com.computerdude.epsilon.command.CmdSetLevel;
 import com.computerdude.epsilon.player.Chat;
-import com.computerdude.epsilon.player.Spawn;
+import com.computerdude.epsilon.player.SpawnHandler;
 import com.computerdude.epsilon.util.MySQL;
 import com.computerdude.epsilon.util.PluginFile;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Epsilon extends JavaPlugin {
 
@@ -21,7 +22,7 @@ public class Epsilon extends JavaPlugin {
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
 
-        pm.registerEvents(new Spawn(), this);
+        pm.registerEvents(new SpawnHandler(), this);
         pm.registerEvents(new Chat(), this);
         pm.registerEvents(new MySQL(), this);
 
