@@ -18,7 +18,7 @@ public class EPlayer {
 
 	public static Rank getRank(Player player) {
 		UUID uuid = player.getUniqueId();
-		
+
 		int rank = MySQL.<Integer>getProperty(uuid, "rank");
 		if(rank == 0) {
 			return Rank.DEFAULT;
