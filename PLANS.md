@@ -10,14 +10,14 @@ The currency may be called "Epsilonian Credits." They will probably be stored in
 
 ### Province: Zago
 
-* City: **Gnitset** Lv. 1
-* City: **Retupoc** Lv. 15
-* City: **Tano** Lv. 30
+* City: **Retupoc** Lv. 1 - Oak Forest
+* City: **Gnitset** Lv. 15 - Cold Mountains
+* City: **Tano** Lv. 30 - Roofed Forest
 
 ### Province: Fayin
 
-* City: **Laven** Lv. 40
-* City: **Mordomia** Lv. 55
+* City: **Laven** Lv. 40 - Swamp
+* City: **Mordomia** Lv. 55 - Rainforest
 * City: **Forna** Lv. 70
 
 ### Province: Tharin
