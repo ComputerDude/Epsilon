@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 import static com.epsilon.util.ColorUtil.color;
 import static com.epsilon.util.ColorUtil.colorf;
 
-public class CmdGMX implements CommandExecutor {
+public class CmdGameMode implements CommandExecutor {
 
     private final GameMode mode;
 
-    public CmdGMX(GameMode gameMode) {
+    public CmdGameMode(GameMode gameMode) {
         mode = gameMode;
     }
 

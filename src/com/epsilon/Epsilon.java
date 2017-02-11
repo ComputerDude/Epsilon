@@ -2,7 +2,7 @@ package com.epsilon;
 
 import com.epsilon.chat.PlayerChat;
 import com.epsilon.command.CmdAdminMode;
-import com.epsilon.command.CmdGMX;
+import com.epsilon.command.CmdGameMode;
 import com.epsilon.command.CmdGetCoins;
 import com.epsilon.command.CmdGetLevel;
 import com.epsilon.command.CmdInventorySee;
@@ -44,9 +44,9 @@ public class Epsilon extends JavaPlugin {
         getCommand("getcoins").setExecutor(new CmdGetCoins());
         getCommand("adminmode").setExecutor(new CmdAdminMode());
         getCommand("inventorysee").setExecutor(new CmdInventorySee());
-        getCommand("gmc").setExecutor(new CmdGMX(GameMode.CREATIVE));
-        getCommand("gms").setExecutor(new CmdGMX(GameMode.SURVIVAL));
-        getCommand("gma").setExecutor(new CmdGMX(GameMode.ADVENTURE));
+        getCommand("gmc").setExecutor(new CmdGameMode(GameMode.CREATIVE));
+        getCommand("gms").setExecutor(new CmdGameMode(GameMode.SURVIVAL));
+        getCommand("gma").setExecutor(new CmdGameMode(GameMode.ADVENTURE));
         
         MySQL.createTables();
         getLogger().info("Epsilon has been enabled.");
