@@ -16,7 +16,7 @@ The currency may be called "Epsilonian Credits." They will probably be stored in
 
 ### Province: Fayin
 
-* City: **Laven** Lv. 40 - 
+* City: **Laven** Lv. 40 - Swamp
 * City: **Mordomia** Lv. 55 - Rainforest
 * City: **Forna** Lv. 70
 
