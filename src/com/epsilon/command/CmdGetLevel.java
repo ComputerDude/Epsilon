@@ -1,16 +1,16 @@
 package com.epsilon.command;
 
-import static com.epsilon.util.ColorUtil.color;
-import static com.epsilon.util.ColorUtil.colorf;
-
+import com.epsilon.Epsilon;
+import com.epsilon.util.LevelUtil;
+import com.epsilon.util.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import com.epsilon.util.LevelUtil;
-import com.epsilon.util.MySQL;
+import org.bukkit.scheduler.BukkitRunnable;
+import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
 
 /**
  * The {@code /getlevel} command gets your (or someone else's) current level.
@@ -37,10 +37,21 @@ public class CmdGetLevel implements CommandExecutor {
             }
             target = (Player) sender;
         }
-        final int level = MySQL.getLevel(target);
-        final long exp = MySQL.getProperty(target, "exp");
-        sender.sendMessage(colorf("&a%s is level %d with %,d/%,d (%.3f%%) experience.", target.getName(), level, exp,
-                LevelUtil.getXP(level), 100.0 * exp / LevelUtil.getXP(level)));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                final int level = MySQL.getProperty(target, "level");
+                final long exp = MySQL.getProperty(target, "exp");
+                final long totalExp = LevelUtil.getXP(level);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        sender.sendMessage(colorf("&a%s is level %d with %,d/%,d (%.3f%%) experience.",
+                                target.getName(), level, exp, totalExp, 100.0 * exp / totalExp));
+                    }
+                }.runTask(Epsilon.getInstance());
+            }
+        }.runTaskAsynchronously(Epsilon.getInstance());
         return true;
     }
 

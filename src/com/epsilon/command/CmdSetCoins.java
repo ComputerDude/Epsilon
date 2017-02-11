@@ -1,15 +1,15 @@
 package com.epsilon.command;
 
-import static com.epsilon.util.ColorUtil.color;
-import static com.epsilon.util.ColorUtil.colorf;
-
+import com.epsilon.Epsilon;
+import com.epsilon.util.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import com.epsilon.util.MySQL;
+import org.bukkit.scheduler.BukkitRunnable;
+import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
 
 public class CmdSetCoins implements CommandExecutor {
 
@@ -40,8 +40,18 @@ public class CmdSetCoins implements CommandExecutor {
             }
             target = (Player) sender;
         }
-        MySQL.setCoins(target, amount);
-        sender.sendMessage(colorf("&aChanged %s's balance to %,d.", target.getName(), amount));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                MySQL.setCoins(target, amount);
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        sender.sendMessage(colorf("&aChanged %s's balance to %,d.", target.getName(), amount));
+                    }
+                }.runTask(Epsilon.getInstance());
+            }
+        }.runTaskAsynchronously(Epsilon.getInstance());
         return true;
     }
 

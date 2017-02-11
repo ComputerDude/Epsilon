@@ -10,14 +10,17 @@ import com.epsilon.util.ColorUtil;
 
 /**
  * A class for sending colored and formated messages.
+ * @deprecated What is this doing here??
  * @author JustBru00
  */
+@Deprecated
 public class Messager {
 	
 	/**
 	 * The default color for messages. Easy to override by typing color codes.
 	 */
 	public final static String DEFAULT_COLOR = ColorUtil.color("&f");
+	// The default color is not always &f (e.g. it's &0 in books and signs), better to put &r --null
 
 	/**
 	 * To send a message to a {@link Player}. Message is colored automatically.

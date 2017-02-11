@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
-import java.util.logging.Level;
 
+import com.epsilon.Epsilon;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import com.epsilon.Epsilon;
-import com.epsilon.chat.Messager;
+import static com.epsilon.util.ColorUtil.colorf;
 
 public class MySQL {
 
@@ -24,7 +24,7 @@ public class MySQL {
 
     /**
      * Create the tables if necessary. Will not create the database (TODO I can't figure out how to do that
-     * without an SQL syntax error).
+     * without an SQL syntax error or SQL injection).
      */
     public static void createTables() {
         openConnection();
@@ -43,20 +43,22 @@ public class MySQL {
             statement.close();
         } catch (Exception e) {
             //e.printStackTrace();
-        	Messager.msgConsole("Problem in the MySQL.java constructor!!!", Level.SEVERE); // To stop error spam.
+        	//Messager.msgConsole("Problem in the MySQL.java constructor!!!", Level.SEVERE); // To stop error spam.
+            // Alright, if you don't want error spam... --null
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [createTables] %s: %s",
+                    e.getClass().getName(), e.getMessage()));
         } finally {
             closeConnection();
         }
     }
 
     public static void disconnect() {
-
         try {
             if (con != null && !con.isClosed()) con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [disconnect] %s: %s",
+                    e.getClass().getName(), e.getMessage()));
         }
-
     }
 
     public static synchronized void openConnection() {
@@ -64,40 +66,38 @@ public class MySQL {
             con = DriverManager.getConnection(host, username, password);
             con.setCatalog(databaseName);
         } catch (SQLException e) {
-            //e.printStackTrace();
-        	Messager.msgConsole("Failed to connect to database!!! (Is the database info correct?)", Level.SEVERE);
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [openConnection] %s: %s",
+                    e.getClass().getName(), e.getMessage()));
         }
     }
 
     public static synchronized void closeConnection() {
-
         try {
             con.close();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [closeConnection] %s: %s",
+                    e.getClass().getName(), e.getMessage()));
         }
-
     }
 
     public static synchronized boolean playerDataContainsPlayer(Player player) {
+        return playerDataContainsPlayer(player.getUniqueId());
+    }
 
+    public static synchronized boolean playerDataContainsPlayer(UUID uuid) {
         try {
             PreparedStatement sql = con.prepareStatement("SELECT * FROM `player_data` WHERE uuid=?;");
-            sql.setString(1, player.getUniqueId().toString());
+            sql.setString(1, uuid.toString());
             ResultSet resultSet = sql.executeQuery();
             boolean containsPlayer = resultSet.next();
-
             sql.close();
             resultSet.close();
-
             return containsPlayer;
-
         } catch (Exception e) {
-            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [playerDataContainsPlayer] %s: %s",
+                    e.getClass().getName(), e.getMessage()));
             return false;
         }
-
     }
 
     public static <T> T getProperty(OfflinePlayer player, String key) throws ClassCastException {
@@ -116,7 +116,8 @@ public class MySQL {
             value = (T) set.getObject(key);
             set.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [getProperty] While getting property %s of %s: " +
+                            "%s: %s", key, uuid.toString(), e.getClass().getName(), e.getMessage()));
             return null;
         } finally {
             closeConnection();
@@ -138,7 +139,9 @@ public class MySQL {
             sql.execute();
             sql.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [setProperty] While setting property %s of %s to" +
+                            " %s: %s: %s", uuid.toString(), key, value.toString(), e.getClass().getName(),
+                    e.getMessage()));
         } finally {
             closeConnection();
         }

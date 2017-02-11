@@ -16,6 +16,7 @@ public class SpawnHandler implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        // FIXME Make this async... somehow
         Player player = e.getPlayer();
         LevelUtil.setXPBar(player, MySQL.getLevel(player), MySQL.getProperty(player, "exp"));
         if (!player.hasPlayedBefore()) {

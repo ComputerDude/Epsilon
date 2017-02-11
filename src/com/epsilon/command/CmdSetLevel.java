@@ -1,16 +1,16 @@
 package com.epsilon.command;
 
-import static com.epsilon.util.ColorUtil.color;
-import static com.epsilon.util.ColorUtil.colorf;
-
+import com.epsilon.Epsilon;
+import com.epsilon.util.LevelUtil;
+import com.epsilon.util.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import com.epsilon.util.LevelUtil;
-import com.epsilon.util.MySQL;
+import org.bukkit.scheduler.BukkitRunnable;
+import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
 
 /**
  * The {@code /setlevel} command sets your current level.
@@ -47,10 +47,21 @@ public class CmdSetLevel implements CommandExecutor {
             }
             target = (Player) sender;
         }
-        MySQL.setLevel(target, level);
-        MySQL.setProperty(target, "exp", xp);
-        LevelUtil.setXPBar(target, level, xp);
-        sender.sendMessage(colorf("&aChanged %s's level to %d with %,d experience.", target.getName(), level, xp));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                MySQL.setProperty(target, "level", level);
+                MySQL.setProperty(target, "exp", xp);
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        LevelUtil.setXPBar(target, level, xp);
+                        sender.sendMessage(colorf("&aChanged %s's level to %d with %,d experience.",
+                                target.getName(), level, xp));
+                    }
+                }.runTask(Epsilon.getInstance());
+            }
+        }.runTaskAsynchronously(Epsilon.getInstance());
         return true;
     }
 }

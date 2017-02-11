@@ -1,16 +1,15 @@
 package com.epsilon.command;
 
 import com.epsilon.Epsilon;
-import com.epsilon.gui.GUI;
+import com.epsilon.gui.AdminPanelGUI;
 import com.epsilon.player.EPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import static com.epsilon.util.ColorUtil.color;
 
-public class AdminGUI implements CommandExecutor{
+public class CmdAdminPanel implements CommandExecutor{
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -24,19 +23,9 @@ public class AdminGUI implements CommandExecutor{
 			sender.sendMessage(color("&4You don't have permission to do that!"));
 			return true;
 		}
-		GUI adminpanel = new GUI(Epsilon.getInstance(), player, color("&4Admin Panel"), 9) {
-
-                @Override
-                public boolean onClick(InventoryClickEvent e) {
-                    return false;
-                }
-
-                @Override
-                public void init() {
-
-                }
-			};
-
+		final AdminPanelGUI gui = new AdminPanelGUI(Epsilon.getInstance(), player);
+		gui.init();
+		gui.open();
 		return true;
 	}
 	

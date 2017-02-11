@@ -9,7 +9,7 @@ public class AdminMode {
 
 	public static void toggleAdminMode(Player player) {
 
-		if (Epsilon.storageFile.getBoolean("player." + player.getUniqueId() + ".adminMode") == true) {
+		if (Epsilon.storageFile.getBoolean("player." + player.getUniqueId() + ".adminMode")) {
 			player.getInventory().setContents(
 					(ItemStack[]) Epsilon.storageFile.get("player." + player.getUniqueId() + ".adminModeInv"));
 			Epsilon.storageFile.set("player." + player.getUniqueId() + ".adminMode", false);
