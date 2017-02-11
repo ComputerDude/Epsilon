@@ -1,4 +1,4 @@
-package com.epsilon.player;
+package com.epsilon.chat;
 
 import static com.epsilon.util.ColorUtil.colorf;
 
@@ -16,7 +16,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.epsilon.util.MySQL;
 
-public class Chat implements Listener {
+public class PlayerChat implements Listener {
 
     public static List<Entity> getEntitiesAroundPoint(Location location, double radius) {
         Collection<Entity> col = location.getWorld().getNearbyEntities(location, radius, radius, radius);

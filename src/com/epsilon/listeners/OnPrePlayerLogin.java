@@ -13,7 +13,7 @@ import static com.epsilon.util.ColorUtil.colorf;
  * @author JustBru00
  *
  */
-public class OnJoin implements Listener {
+public class OnPrePlayerLogin implements Listener {
 
 	@EventHandler
     public void onPlayerPreLogin(AsyncPlayerPreLoginEvent e) {

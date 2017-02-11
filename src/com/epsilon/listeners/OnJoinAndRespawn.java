@@ -1,4 +1,4 @@
-package com.epsilon.player;
+package com.epsilon.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import com.epsilon.util.LevelUtil;
 import com.epsilon.util.MySQL;
 
-public class SpawnHandler implements Listener {
+public class OnJoinAndRespawn implements Listener {
 
     public static final int[] SPAWN = {0, 90, 0};
 

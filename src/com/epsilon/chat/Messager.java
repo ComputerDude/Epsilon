@@ -9,11 +9,10 @@ import org.bukkit.entity.Player;
 import com.epsilon.util.ColorUtil;
 
 /**
- * A class for sending colored and formated messages.
- * @deprecated What is this doing here??
+ * A class for sending colored and formated messages. 
+ * Please just keep this. Even if you don't use this.
  * @author JustBru00
  */
-@Deprecated
 public class Messager {
 	
 	/**
