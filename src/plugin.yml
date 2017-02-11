@@ -1,5 +1,5 @@
 name: Epsilon
-main: com.computerdude.epsilon.Epsilon
+main: com.epsilon.Epsilon
 version: 1.0
 authors: [Justin "JustBru00" Brubaker, ComputerDude, __null]
 commands:
