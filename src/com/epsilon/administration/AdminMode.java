@@ -9,25 +9,25 @@ public class AdminMode {
 
 	public static void toggleAdminMode(Player player) {
 
-		if (Epsilon.storageFile.getBoolean("player." + player.getUniqueId() + ".adminMode")) {
-			player.getInventory().setContents((ItemStack[]) Epsilon.storageFile.get("player." + player.getUniqueId() + ".adminModeInv"));
-			Epsilon.storageFile.set("player." + player.getUniqueId() + ".adminMode", false);
-			Epsilon.storageFile.set("player." + player.getUniqueId() + ".adminModeInv", null);
-			Epsilon.storageFile.save();
-			Epsilon.storageFile.reload();
+		if (Epsilon.adminModeConfig.getBoolean("player." + player.getUniqueId() + ".adminMode")) {
+			player.getInventory().setContents((ItemStack[]) Epsilon.adminModeConfig.get("player." + player.getUniqueId() + ".adminModeInv"));
+			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminMode", false);
+			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminModeInv", null);
+			Epsilon.adminModeConfig.save();
+			Epsilon.adminModeConfig.reload();
 		} else {
-			Epsilon.storageFile.set("player." + player.getUniqueId() + ".adminModeInv",	player.getInventory().getContents());
+			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminModeInv",	player.getInventory().getContents());
 			
 			player.getInventory().clear(); // Use #clear() method instead. - JustBru00
 			
-			Epsilon.storageFile.set("player." + player.getUniqueId() + ".adminMode", true);
-			Epsilon.storageFile.save();
-			Epsilon.storageFile.reload();
+			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminMode", true);
+			Epsilon.adminModeConfig.save();
+			Epsilon.adminModeConfig.reload();
 		}
 	}
 
 	public static boolean isAdminModeEnabled(Player player) {
-		return Epsilon.storageFile.getBoolean("player." + player.getUniqueId() + ".adminMode");
+		return Epsilon.adminModeConfig.getBoolean("player." + player.getUniqueId() + ".adminMode");
 	}
 
 }

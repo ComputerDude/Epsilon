@@ -25,12 +25,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Epsilon extends JavaPlugin {
 
     public static PluginFile storageFile = null;
+    public static PluginFile adminModeConfig = null;
     public static Epsilon plugin;
 
     @Override
     public void onEnable() {
     	plugin = this;
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
+        adminModeConfig = new PluginFile(this, "admin-mode.yml");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
         
         pm.registerEvents(new OnJoinAndRespawn(), this);
