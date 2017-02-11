@@ -1,7 +1,7 @@
 name: Epsilon
 main: com.epsilon.Epsilon
 version: 1.0
-authors: [Justin "JustBru00" Brubaker, ComputerDude, __null]
+authors: [ComputerDude, __null, JustBru00]
 commands:
     setlevel:
         description: Set your level
