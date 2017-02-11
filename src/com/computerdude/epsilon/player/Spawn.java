@@ -1,4 +1,4 @@
-package com.computerdude.epsilon.game;
+package com.computerdude.epsilon.player;
 
 import com.computerdude.epsilon.util.LevelUtil;
 import com.computerdude.epsilon.util.MySQL;

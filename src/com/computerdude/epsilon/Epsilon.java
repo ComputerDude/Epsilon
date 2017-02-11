@@ -4,15 +4,15 @@ import com.computerdude.epsilon.command.CmdGetCoins;
 import com.computerdude.epsilon.command.CmdGetLevel;
 import com.computerdude.epsilon.command.CmdSetCoins;
 import com.computerdude.epsilon.command.CmdSetLevel;
-import com.computerdude.epsilon.game.Spawn;
 import com.computerdude.epsilon.player.Chat;
+import com.computerdude.epsilon.player.Spawn;
 import com.computerdude.epsilon.util.MySQL;
 import com.computerdude.epsilon.util.PluginFile;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
+public class Epsilon extends JavaPlugin {
 
     public static PluginFile storageFile = null;
 
