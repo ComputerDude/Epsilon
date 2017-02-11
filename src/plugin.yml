@@ -6,15 +6,19 @@ commands:
     setlevel:
         description: Set your level
         usage: /setlevel <level> [player]
+        aliases: [slevel]
     getlevel:
         description: Get your level
         usage: /getlevel [player]
+        aliases: [glevel]
     setcoins:
         description: Set your coin balance
         usage: /setcoins <coins> [player]
+        aliases: [scoins]
     getcoins:
         descrption: Get your coin balance
         usage: /getcoins [player]
+        aliases: [gcoins]
     gms:
         description: Set gamemode to survival.
         usage: /gms [player]
@@ -27,6 +31,8 @@ commands:
     adminmode:
         descrption: Toggles admin mode.
         usage: /adminmode
+        aliases: [admin]
     inventorysee:
         descrption: View a players inventory.
         usage: /inventorysee <player>
+        aliases: [invsee]
