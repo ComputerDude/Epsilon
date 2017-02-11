@@ -18,7 +18,7 @@ public class CmdAdminMode implements CommandExecutor {
 			Player player = (Player) sender;
 			EPlayer eplayer = new EPlayer(player);
 			
-			if (eplayer.getRank(player).getLevel() <= 8800) {
+			if (eplayer.getRank().getLevel() <= 8800) { // Fix using a depreciated method. - JustBru00
 
 				if(args.length == 0) {
 					AdminMode.toggleAdminMode(player);
