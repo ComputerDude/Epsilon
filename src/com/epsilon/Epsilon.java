@@ -1,6 +1,8 @@
 package com.epsilon;
 
+import com.epsilon.command.CmdGMX;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -40,7 +42,9 @@ public class Epsilon extends JavaPlugin {
         getCommand("setcoins").setExecutor(new CmdSetCoins());
         getCommand("getcoins").setExecutor(new CmdGetCoins());
         getCommand("adminmode").setExecutor(new CmdAdminMode());
-        
+        getCommand("gmc").setExecutor(new CmdGMX(GameMode.CREATIVE));
+        getCommand("gms").setExecutor(new CmdGMX(GameMode.SURVIVAL));
+        getCommand("gma").setExecutor(new CmdGMX(GameMode.ADVENTURE));
         
         MySQL.createTables();
         Messager.msgConsole("Enabled plugin successfully.");

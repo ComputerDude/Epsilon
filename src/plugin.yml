@@ -16,11 +16,14 @@ commands:
         descrption: Get your coin balance
         usage: /getcoins [player]
     gms:
-      description: Sets gamemode to survival. 
-      usage: /gms <player>
+        description: Set gamemode to survival.
+        usage: /gms [player]
     gmc:
-      description: Sets gamemode to creative.    
-      usage: /gmc <player>
+      description: Set gamemode to creative.
+        usage: /gmc [player]
+    gma:
+        descrption: Set gamemode to adventure.
+        usage: /gma [player]
     adminmode:
         descrption: Toggles admin mode.
         usage: /adminmode
