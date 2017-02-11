@@ -1,5 +1,5 @@
 name: Epsilon
-main: com.computerdude.epsilon.Main
+main: com.computerdude.epsilon.Epsilon
 version: 1.0
 commands:
     setlevel:

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import com.computerdude.epsilon.Main;
+import com.computerdude.epsilon.Epsilon;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,10 +18,10 @@ public class MySQL implements Listener {
 
     private static Connection con;
 
-    public static String host = Main.storageFile.getString("host");
-    public static String username = Main.storageFile.getString("username");
-    public static String password = Main.storageFile.getString("password");
-    public static String databaseName = Main.storageFile.getString("database-name");
+    public static String host = Epsilon.storageFile.getString("host");
+    public static String username = Epsilon.storageFile.getString("username");
+    public static String password = Epsilon.storageFile.getString("password");
+    public static String databaseName = Epsilon.storageFile.getString("database-name");
 
     /**
      * Create the tables if necessary. Will not create the database (TODO I can't figure out how to do that
