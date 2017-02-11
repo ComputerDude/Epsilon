@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
 
 public class CmdGMX implements CommandExecutor {
 
@@ -33,6 +34,7 @@ public class CmdGMX implements CommandExecutor {
             target = (Player) sender;
         }
         target.setGameMode(mode);
+        sender.sendMessage(colorf("&aSet %s's game mode to %s.", target.getName(), mode.name().toLowerCase()));
         return true;
     }
 
