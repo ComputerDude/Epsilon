@@ -16,4 +16,11 @@ public enum Rank {
         return level;
     }
 
+    public String toString() {
+    
+    	String rank = "";
+    	
+    	return rank;
+    }
+    
 }
