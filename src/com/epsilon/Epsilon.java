@@ -5,6 +5,7 @@ import com.epsilon.command.CmdAdminMode;
 import com.epsilon.command.CmdGMX;
 import com.epsilon.command.CmdGetCoins;
 import com.epsilon.command.CmdGetLevel;
+import com.epsilon.command.CmdInventorySee;
 import com.epsilon.command.CmdSetCoins;
 import com.epsilon.command.CmdSetLevel;
 import com.epsilon.listeners.OnDeath;
@@ -42,6 +43,7 @@ public class Epsilon extends JavaPlugin {
         getCommand("setcoins").setExecutor(new CmdSetCoins());
         getCommand("getcoins").setExecutor(new CmdGetCoins());
         getCommand("adminmode").setExecutor(new CmdAdminMode());
+        getCommand("inventorysee").setExecutor(new CmdInventorySee());
         getCommand("gmc").setExecutor(new CmdGMX(GameMode.CREATIVE));
         getCommand("gms").setExecutor(new CmdGMX(GameMode.SURVIVAL));
         getCommand("gma").setExecutor(new CmdGMX(GameMode.ADVENTURE));
