@@ -5,6 +5,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.epsilon.chat.Messager;
+import com.epsilon.command.CmdAdminMode;
 import com.epsilon.command.CmdGetCoins;
 import com.epsilon.command.CmdGetLevel;
 import com.epsilon.command.CmdSetCoins;
@@ -38,7 +39,7 @@ public class Epsilon extends JavaPlugin {
         getCommand("getlevel").setExecutor(new CmdGetLevel());
         getCommand("setcoins").setExecutor(new CmdSetCoins());
         getCommand("getcoins").setExecutor(new CmdGetCoins());
-        getCommand("adminmode").setExecutor(new CmdGetCoins());
+        getCommand("adminmode").setExecutor(new CmdAdminMode());
 
         MySQL.createTables();
         Messager.msgConsole("Enabled plugin successfully.");
