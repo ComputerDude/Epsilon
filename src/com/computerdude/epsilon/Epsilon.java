@@ -12,12 +12,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Main class of the plugin. (Extends {@link JavaPlugin}) 
+ * @author Multible Authors
+ *
+ */
 public class Epsilon extends JavaPlugin {
 
     public static PluginFile storageFile = null;
+    public static Epsilon plugin;
 
     @Override
     public void onEnable() {
+    	plugin = this;
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
 
@@ -36,6 +43,10 @@ public class Epsilon extends JavaPlugin {
     @Override
     public void onDisable() {
         MySQL.disconnect();
+        plugin = null;
     }
-
+    
+    public Epsilon getInstance() {
+    	return plugin;
+    }
 }
