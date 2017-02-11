@@ -9,6 +9,7 @@ import com.epsilon.command.CmdGetCoins;
 import com.epsilon.command.CmdGetLevel;
 import com.epsilon.command.CmdSetCoins;
 import com.epsilon.command.CmdSetLevel;
+import com.epsilon.listeners.OnJoin;
 import com.epsilon.player.Chat;
 import com.epsilon.player.SpawnHandler;
 import com.epsilon.util.MySQL;
@@ -31,7 +32,7 @@ public class Epsilon extends JavaPlugin {
         
         pm.registerEvents(new SpawnHandler(), this);
         pm.registerEvents(new Chat(), this);
-        pm.registerEvents(new MySQL(), this);
+        pm.registerEvents(new OnJoin(), this);
 
         getCommand("setlevel").setExecutor(new CmdSetLevel());
         getCommand("getlevel").setExecutor(new CmdGetLevel());

@@ -10,16 +10,12 @@ import java.util.logging.Level;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
-
 import com.epsilon.Epsilon;
 import com.epsilon.chat.Messager;
 
-public class MySQL implements Listener {
+public class MySQL {
 
-    private static Connection con;
+    public static Connection con;
 
     public static String host = Epsilon.storageFile.getString("host");
     public static String username = Epsilon.storageFile.getString("username");
@@ -163,29 +159,4 @@ public class MySQL implements Listener {
     public static void setLevel(Player player, int level) {
         setProperty(player, "level", level);
     }
-
-    @EventHandler
-    public void onPlayerLogin(PlayerLoginEvent e) {
-        openConnection();
-        try {
-            @SuppressWarnings("unused")
-			String lastName = null;
-            if (playerDataContainsPlayer(e.getPlayer())) {
-                // lastName = getProperty(e.getPlayer(), "player");
-                setProperty(e.getPlayer(), "player", e.getPlayer().getName());
-            } else {
-                PreparedStatement sql = con.prepareStatement("INSERT INTO `player_data` VALUES(?, ?, DEFAULT, " +
-                        "DEFAULT, DEFAULT);");
-                sql.setString(1, e.getPlayer().getUniqueId().toString());
-                sql.setString(2, e.getPlayer().getName());
-                sql.execute();
-                sql.close();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-    }
-
 }
