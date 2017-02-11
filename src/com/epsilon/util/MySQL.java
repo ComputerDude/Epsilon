@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.epsilon.Epsilon;
+import com.epsilon.chat.Messager;
 
 public class MySQL implements Listener {
 
@@ -44,7 +46,8 @@ public class MySQL implements Listener {
             statement.execute();
             statement.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        	Messager.msgConsole("Problem in the MySQL.java constructor!!!", Level.SEVERE); // To stop error spam.
         } finally {
             closeConnection();
         }
@@ -65,7 +68,8 @@ public class MySQL implements Listener {
             con = DriverManager.getConnection(host, username, password);
             con.setCatalog(databaseName);
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        	Messager.msgConsole("Failed to connect to database!!! (Is the database info correct?)", Level.SEVERE);
         }
     }
 
@@ -164,7 +168,8 @@ public class MySQL implements Listener {
     public void onPlayerLogin(PlayerLoginEvent e) {
         openConnection();
         try {
-            String lastName = null;
+            @SuppressWarnings("unused")
+			String lastName = null;
             if (playerDataContainsPlayer(e.getPlayer())) {
                 // lastName = getProperty(e.getPlayer(), "player");
                 setProperty(e.getPlayer(), "player", e.getPlayer().getName());
