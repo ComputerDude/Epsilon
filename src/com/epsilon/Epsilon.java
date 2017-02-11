@@ -48,7 +48,7 @@ public class Epsilon extends JavaPlugin {
         plugin = null;
     }
     
-    public Epsilon getInstance() {
+    public static Epsilon getInstance() {
     	return plugin;
     }
 }
