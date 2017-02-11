@@ -40,7 +40,8 @@ public class Epsilon extends JavaPlugin {
         getCommand("setcoins").setExecutor(new CmdSetCoins());
         getCommand("getcoins").setExecutor(new CmdGetCoins());
         getCommand("adminmode").setExecutor(new CmdAdminMode());
-
+        
+        
         MySQL.createTables();
         Messager.msgConsole("Enabled plugin successfully.");
     }
