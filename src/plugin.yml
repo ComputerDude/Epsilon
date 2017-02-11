@@ -15,3 +15,9 @@ commands:
     getcoins:
         descrption: Get your coin balance
         usage: /getcoins [player]
+    gms:
+      description: Sets gamemode to survival. 
+      usage: /gms <player>
+    gmc:
+      description: Sets gamemode to creative.    
+      usage: /gmc <player>
