@@ -9,6 +9,7 @@ import com.computerdude.epsilon.util.ColorUtil;
 import com.computerdude.epsilon.util.MySQL;
 
 public class EPlayer {
+	
 
 	private String uuid;
 	
