@@ -21,7 +21,7 @@ public class Epsilon extends JavaPlugin {
     public void onEnable() {
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
-
+        
         pm.registerEvents(new SpawnHandler(), this);
         pm.registerEvents(new Chat(), this);
         pm.registerEvents(new MySQL(), this);
@@ -30,6 +30,7 @@ public class Epsilon extends JavaPlugin {
         getCommand("getlevel").setExecutor(new CmdGetLevel());
         getCommand("setcoins").setExecutor(new CmdSetCoins());
         getCommand("getcoins").setExecutor(new CmdGetCoins());
+        getCommand("adminmode").setExecutor(new CmdGetCoins());
 
         MySQL.createTables();
     }

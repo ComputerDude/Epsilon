@@ -6,6 +6,7 @@ import com.computerdude.epsilon.Epsilon;
 
 public class AdminMode {
 
+	
 	public static void toggleAdminMode(Player player) {
 		if(Epsilon.storageFile.getBoolean("player." + player.getUniqueId().toString() + ".adminMode") == true) {
 			Epsilon.storageFile.set("player." + player.getUniqueId().toString() + ".adminMode", false);
