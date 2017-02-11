@@ -1,6 +1,7 @@
 name: Epsilon
 main: com.computerdude.epsilon.Epsilon
 version: 1.0
+authors: [Justin "JustBru00" Brubaker, ComputerDude, __null]
 commands:
     setlevel:
         description: Set your level
