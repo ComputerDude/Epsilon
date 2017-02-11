@@ -19,7 +19,7 @@ commands:
         description: Set gamemode to survival.
         usage: /gms [player]
     gmc:
-      description: Set gamemode to creative.
+        description: Set gamemode to creative.
         usage: /gmc [player]
     gma:
         descrption: Set gamemode to adventure.
