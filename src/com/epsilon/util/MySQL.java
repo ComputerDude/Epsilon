@@ -43,7 +43,6 @@ public class MySQL {
             statement.close();
         } catch (Exception e) {
             //e.printStackTrace();
-        	//Messager.msgConsole("Problem in the MySQL.java constructor!!!", Level.SEVERE); // To stop error spam.
             // Alright, if you don't want error spam... --null
             Bukkit.getConsoleSender().sendMessage(colorf("&c[MySQL] [createTables] %s: %s",
                     e.getClass().getName(), e.getMessage()));

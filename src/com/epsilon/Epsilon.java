@@ -1,23 +1,21 @@
 package com.epsilon;
 
-import com.epsilon.command.CmdGMX;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.epsilon.chat.PlayerChat;
-import com.epsilon.chat.Messager;
 import com.epsilon.command.CmdAdminMode;
+import com.epsilon.command.CmdGMX;
 import com.epsilon.command.CmdGetCoins;
 import com.epsilon.command.CmdGetLevel;
 import com.epsilon.command.CmdSetCoins;
 import com.epsilon.command.CmdSetLevel;
 import com.epsilon.listeners.OnDeath;
-import com.epsilon.listeners.OnPrePlayerLogin;
 import com.epsilon.listeners.OnJoinAndRespawn;
+import com.epsilon.listeners.OnPrePlayerLogin;
 import com.epsilon.util.MySQL;
 import com.epsilon.util.PluginFile;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Main class of the plugin. (Extends {@link JavaPlugin}) 
@@ -49,7 +47,7 @@ public class Epsilon extends JavaPlugin {
         getCommand("gma").setExecutor(new CmdGMX(GameMode.ADVENTURE));
         
         MySQL.createTables();
-        Messager.msgConsole("Enabled plugin successfully.");
+        getLogger().info("Epsilon has been enabled.");
     }
 
     @Override
