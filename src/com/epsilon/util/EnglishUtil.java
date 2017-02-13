@@ -3,15 +3,9 @@ package com.epsilon.util;
 public class EnglishUtil {
 
 	public static String firstUpper(String s) {
-		
-		s = s.toLowerCase();
-		char c = s.charAt(0);
-		s = s.substring(1, s.length());
-		String u = "" + c;
-		u = u.toUpperCase();
-		s = u + s;
-		
-		return s;
+		// What the hell is this super inefficient code
+		// Also you should just use StringUtils#capitalize(String) --null
+		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
 	
 }
