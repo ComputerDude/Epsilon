@@ -1,43 +1,24 @@
 package com.epsilon.entities;
 
+import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
+
 public class EntityHealthBar {
 
-	/**
-	 * For formating the health bar.
-	 * @param health The health of the entity
-	 * @param maxHealth The max health of the entity.
-	 * @author JustBru00
-	 */
-	private String formatBar(int health, int maxHealth) { // Design is: "[:::::healthLeft:::::]"
-		int percent = (health / maxHealth) * 100;
-		
-		if (percent >= 90) {
-			return "&8[&a:::::&c" + health + "&a:::::&8]";
-		} else if (percent >= 80 && percent <= 90) {
-			return "&8[&a:::::&c" + health + "&a::::&c:&8]";
-		} else if (percent >= 70 && percent <= 80) {
-			return "&8[&a:::::&c" + health + "&a:::&c::&8]";
-		} else if (percent >= 60 && percent <= 70) {
-			return "&8[&a:::::&c" + health + "&a::&c:::&8]";
-		} else if (percent >= 50 && percent <= 60) {
-			return "&8[&a:::::&c" + health + "&a:&c::::&8]";
-		} else if (percent >= 40 && percent <= 50) {
-			return "&8[&a:::::&c" + health + "&c:::::&8]";
-		} else if (percent >= 30 && percent <= 40) {
-			return "&8[&a::::&c:" + health + "&c:::::&8]";
-		} else if (percent >= 20 && percent <= 30) {
-			return "&8[&a:::&c::" + health + "&c:::::&8]";
-		} else if (percent >= 10 && percent <= 20) {
-			return "&8[&a::&c:::" + health + "&c:::::&8]";
-		} else if (percent > 0 && percent <= 10) {
-			return "&8[&a:&c::::" + health + "&c:::::&8]";
-		} else if (percent == 0) {
-			return "&8[&c:::::" + health + "&c:::::&8]";
-		} else if (percent < 0) {
-			return "&cThis really should be dead.";
-		} else {
-			return "&cSomeone messed up";
-		}
-	}
-	
+    /**
+     * For formating the health bar.
+     *
+     * @param health The health of the entity
+     * @param maxHealth The max health of the entity.
+     */
+    private static String formatBar(int health, int maxHealth) {
+        // Consult null if you would like to modify any part of this method.
+        // He will adjust the algorithm if necessary.
+        final double fraction = (double) health / maxHealth;
+        final int healthLen = Integer.toString(health).length();
+        String bar = colorf("&8[&a|||||%d|||||&8]", health);
+        final int pos = 5 + (fraction >= 1 ? healthLen + 10 : (int) (fraction * (healthLen + 11)));
+        return bar.substring(0, pos) + color("&c") + (bar.substring(pos));
+    }
+
 }
