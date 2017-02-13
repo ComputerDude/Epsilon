@@ -16,7 +16,7 @@ public class EntityHealthBar {
         // He will adjust the algorithm if necessary.
         final double fraction = (double) health / maxHealth;
         final int healthLen = Integer.toString(health).length();
-        String bar = colorf("&8[&a|||||%d|||||&8]", health);
+        final String bar = colorf("&8[&a|||||%d|||||&8]", health);
         final int pos = 5 + (fraction >= 1 ? healthLen + 10 : (int) (fraction * (healthLen + 11)));
         return bar.substring(0, pos) + color("&c") + (bar.substring(pos));
     }
