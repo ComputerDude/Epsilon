@@ -119,6 +119,8 @@ public class PacketUtil {
                         final NBTTagCompound compound = new NBTTagCompound();
                         ((NBTTagList) target).add(compound);
                         target = compound;
+                    } else {
+                        target = ((NBTTagList) target).get(index);
                     }
                 } else throw new ClassCastException("Not a compound or list");
             }
