@@ -66,6 +66,19 @@ public class PacketUtil {
     }
 
     /**
+     * Get an entity's NBT data.
+     * @param entity the target entity.
+     * @param path the path of the tag to get, separated by periods (eg {@code SpawnPotentials.0.Type})
+     * @return the value of the requested NBT tag, or {@code null} if it does not exist -- lists are represented by
+     * {@code List<?>} and compounds are represented by {@code Map<String, ?>}.
+     */
+    public static Object getEntityNBT(Entity entity, String path) {
+        final NBTTagCompound root = new NBTTagCompound();
+        ((CraftEntity) entity).getHandle().c(root);
+        return getNBT(root, path);
+    }
+
+    /**
      * Set an item's NBT tag data.
      *
      * @param item the target item.
@@ -86,6 +99,21 @@ public class PacketUtil {
         }
         setNBT(root, path, value);
         return CraftItemStack.asCraftMirror(nmsItem);
+    }
+
+    /**
+     * Get an item's NBT tag data.
+     *
+     * @param item the target item.
+     * @param path the path of the tag to get, separated by periods, starting from the {@code tag} tag (eg {@code
+     * CanDestroy.0})
+     * @return the value of the requested NBT tag, or {@code null} if it does not exist -- lists are represented by
+     * {@code List<?>} and compounds are represented by {@code Map<String, ?>}.
+     */
+    public static Object getItemNBT(ItemStack item, String path) {
+        final net.minecraft.server.v1_11_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+        if (!nmsItem.hasTag()) return null;
+        return getNBT(nmsItem.getTag(), path);
     }
 
     private static void setNBT(NBTTagCompound root, String path, Object value) {
@@ -134,7 +162,8 @@ public class PacketUtil {
                 target = ((NBTTagCompound) target).get(key);
             } else if (target instanceof NBTTagList) {
                 target = ((NBTTagList) target).get(Integer.parseInt(key));
-            } else throw new ClassCastException("Not a compound or list");
+            } else return null;
+            if (target == null) return null;
         }
         return toObject(target);
     }
