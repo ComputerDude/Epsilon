@@ -9,6 +9,7 @@ import com.epsilon.command.CmdInventorySee;
 import com.epsilon.command.CmdSetCoins;
 import com.epsilon.command.CmdSetLevel;
 import com.epsilon.listeners.OnDeath;
+import com.epsilon.listeners.OnInteractEntity;
 import com.epsilon.listeners.OnJoinAndRespawn;
 import com.epsilon.listeners.OnPrePlayerLogin;
 import com.epsilon.util.MySQL;
@@ -26,11 +27,11 @@ public class Epsilon extends JavaPlugin {
 
     public static PluginFile storageFile = null;
     public static PluginFile adminModeConfig = null;
-    public static Epsilon plugin;
+    public static Epsilon instance;
 
     @Override
     public void onEnable() {
-    	plugin = this;
+    	instance = this;
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
         adminModeConfig = new PluginFile(this, "admin-mode.yml");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
@@ -38,7 +39,8 @@ public class Epsilon extends JavaPlugin {
         pm.registerEvents(new OnJoinAndRespawn(), this);
         pm.registerEvents(new PlayerChat(), this);
         pm.registerEvents(new OnPrePlayerLogin(), this);
-        pm.registerEvents(new OnDeath(), plugin);
+        pm.registerEvents(new OnDeath(), this);
+        pm.registerEvents(new OnInteractEntity(), this);
 
         getCommand("setlevel").setExecutor(new CmdSetLevel());
         getCommand("getlevel").setExecutor(new CmdGetLevel());
@@ -58,10 +60,10 @@ public class Epsilon extends JavaPlugin {
     @Override
     public void onDisable() {
         MySQL.disconnect();
-        plugin = null;
+        instance = null;
     }
     
     public static Epsilon getInstance() {
-    	return plugin;
+    	return instance;
     }
 }
