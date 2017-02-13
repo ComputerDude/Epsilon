@@ -127,6 +127,18 @@ public class PacketUtil {
         }
     }
 
+    private static Object getNBT(NBTTagCompound root, String path) {
+        NBTBase target = root;
+        for (String key : path.split("\\.")) {
+            if (target instanceof NBTTagCompound) {
+                target = ((NBTTagCompound) target).get(key);
+            } else if (target instanceof NBTTagList) {
+                target = ((NBTTagList) target).get(Integer.parseInt(key));
+            } else throw new ClassCastException("Not a compound or list");
+        }
+        return toObject(target);
+    }
+
     private static NBTBase toNBTBase(Object o) {
         if (o == null) return null;
         if (o instanceof Integer) return new NBTTagInt((Integer) o);
@@ -148,6 +160,32 @@ public class PacketUtil {
             return compound;
         }
         throw new ClassCastException(o.getClass().getName() + " cannot be turned into an NBTBase");
+    }
+
+    private static Object toObject(NBTBase nbt) {
+        if (nbt == null) return null;
+        if (nbt instanceof NBTTagInt) return ((NBTTagInt) nbt).e();
+        if (nbt instanceof NBTTagString) return ((NBTTagString) nbt).c_();
+        if (nbt instanceof NBTTagFloat) return ((NBTTagFloat) nbt).i();
+        if (nbt instanceof NBTTagDouble) return ((NBTTagDouble) nbt).asDouble();
+        if (nbt instanceof NBTTagShort) return ((NBTTagShort) nbt).f();
+        if (nbt instanceof NBTTagByte) return ((NBTTagByte) nbt).g();
+        if (nbt instanceof NBTTagLong) return ((NBTTagLong) nbt).d();
+        if (nbt instanceof NBTTagList) {
+            final List<Object> list = new ArrayList<>();
+            for (int i = 0; i < ((NBTTagList) nbt).size(); i++) {
+                list.add(toObject(((NBTTagList) nbt).get(i)));
+            }
+            return list;
+        }
+        if (nbt instanceof NBTTagCompound) {
+            final Map<String, Object> map = new HashMap<>();
+            for (String k : ((NBTTagCompound) nbt).c()) {
+                map.put(k, toObject(((NBTTagCompound) nbt).get(k)));
+            }
+            return map;
+        }
+        throw new ClassCastException(nbt.getClass().getName() + " cannot be turned into an object");
     }
 
     public static void main(String[] args) {
