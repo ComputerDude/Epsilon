@@ -22,7 +22,7 @@ public class OnDeath implements Listener {
 			Player player = (Player) e.getEntity();
 			if(player.getHealth() <= e.getDamage()) {
 				e.setCancelled(true);
-				player.setHealth(player.getMaxHealth());
+				player.setHealth(20); // Change from depreciated method - JustBru00
 				player.teleport(EConstants.SPAWN);
 				player.sendTitle(ColorUtil.color("&c&lYou Died"), ColorUtil.color("&4You have been teleported to spawn!"), 20, 80, 20);
 				player.getInventory().clear();
