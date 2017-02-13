@@ -1,33 +1,35 @@
 package com.epsilon.listeners;
 
-import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import com.epsilon.Epsilon;
+import com.epsilon.constants.EConstants;
+import com.epsilon.util.ColorUtil;
 
 /**
  * Class for death handling
- * @author JustBru00
+ * @author ComputerDude
  *
  */
 public class OnDeath implements Listener {
 
 	@EventHandler
-	public void onDeath(PlayerDeathEvent e) {
+	public void onDeath(EntityDamageByEntityEvent e) {
 		
-		final Player p = e.getEntity();
-		
-		// Respawn player after 3 ticks (One or two ticks will not work sometimes.)
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Epsilon.getInstance(), new Runnable() {
-			
-			@Override
-			public void run() {
-				p.spigot().respawn(); 				
+		if(e.getEntityType() == EntityType.PLAYER) {
+			Player player = (Player) e.getEntity();
+			if(player.getHealth() <= e.getDamage()) {
+				e.setCancelled(true);
+				player.setHealth(player.getMaxHealth());
+				player.teleport(EConstants.SPAWN);
+				player.sendTitle(ColorUtil.color("&c&lYou Died"), ColorUtil.color("&4You have been teleported to spawn!"), 20, 80, 20);
+				player.getInventory().clear();
 			}
-		}, 3);
+			
+		}
 		
 	}
 	
