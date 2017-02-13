@@ -18,7 +18,6 @@ public class OnDeath implements Listener {
 
 	@EventHandler
 	public void onDeath(EntityDamageByEntityEvent e) {
-		
 		if(e.getEntityType() == EntityType.PLAYER) {
 			Player player = (Player) e.getEntity();
 			if(player.getHealth() <= e.getDamage()) {
