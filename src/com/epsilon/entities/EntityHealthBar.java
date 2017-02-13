@@ -18,7 +18,7 @@ public class EntityHealthBar {
         final int healthLen = Integer.toString(health).length();
         final String bar = colorf("&8[&a|||||%d|||||&8]", health);
         final int pos = 5 + (fraction >= 1 ? healthLen + 10 : (int) (fraction * (healthLen + 11)));
-        return bar.substring(0, pos) + color("&c") + (bar.substring(pos));
+        return bar.substring(0, pos) + color("&c") + bar.substring(pos);
     }
 
 }
