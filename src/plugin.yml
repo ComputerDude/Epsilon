@@ -38,4 +38,4 @@ commands:
     inventorysee:
         descrption: View a players inventory.
         usage: /inventorysee <player>
-        aliases: [invsee, inv]
+        aliases: [invsee]     
