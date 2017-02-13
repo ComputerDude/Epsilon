@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import net.minecraft.server.v1_11_R1.EntityLiving;
 import net.minecraft.server.v1_11_R1.NBTBase;
@@ -218,22 +217,6 @@ public class PacketUtil {
             return map;
         }
         throw new ClassCastException(nbt.getClass().getName() + " cannot be turned into an object");
-    }
-
-    public static void main(String[] args) {
-        final Scanner in = new Scanner(System.in);
-        NBTTagCompound compound = new NBTTagCompound();
-        while (true) {
-            System.out.println("compound = " + compound);
-            System.out.print("Key> ");
-            final String key = in.nextLine();
-            System.out.print("Value> ");
-            final String value = in.nextLine();
-            if ("{}".equals(value)) setNBT(compound, key, new HashMap<String, Object>());
-            else if ("[]".equals(value)) setNBT(compound, key, new ArrayList<>());
-            else if ("null".equals(value)) setNBT(compound, key, null);
-            else setNBT(compound, key, value);
-        }
     }
 
 }
