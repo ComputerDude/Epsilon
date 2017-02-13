@@ -24,8 +24,7 @@ public class AdminMode {
 			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminModeInv",
 					player.getInventory().getContents());
 
-			player.getInventory().clear(); // Use #clear() method instead. -
-											// JustBru00
+			player.getInventory().clear(); // Use #clear() method instead. - JustBru00
 
 			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminMode", true);
 			Epsilon.adminModeConfig.save();
