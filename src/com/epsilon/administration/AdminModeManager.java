@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.epsilon.Epsilon;
 
-public class AdminMode {
+public class AdminModeManager {
 
 	public static void toggleAdminMode(Player player) {
 
