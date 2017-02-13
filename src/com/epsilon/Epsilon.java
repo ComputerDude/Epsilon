@@ -49,6 +49,7 @@ public class Epsilon extends JavaPlugin {
         getCommand("gmc").setExecutor(new CmdGameMode(GameMode.CREATIVE));
         getCommand("gms").setExecutor(new CmdGameMode(GameMode.SURVIVAL));
         getCommand("gma").setExecutor(new CmdGameMode(GameMode.ADVENTURE));
+        getCommand("gmsp").setExecutor(new CmdGameMode(GameMode.SPECTATOR));
         
         MySQL.createTables();
         getLogger().info("Epsilon has been enabled.");
