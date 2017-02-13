@@ -39,7 +39,6 @@ public class ItemUtil {
 	 * Use ItemStack itm = ItemUtil.addGlow(itm); not just ItemUtil.addGlow(itm); 
 	 * @param item The itemstack to add glow two.
 	 * @return A itemstack with glow.
-	 * @author ComputerDude
 	 */
 	public static ItemStack addGlow(ItemStack item) throws WrongVersionException {
 		try {
@@ -55,8 +54,10 @@ public class ItemUtil {
 			tag.set("ench", ench);
 			nmsStack.setTag(tag);
 			return CraftItemStack.asCraftMirror(nmsStack);
-		} catch (Exception e) {
-			throw new WrongVersionException("Problem in ItemUtil.addGlow(). Probably wrong version.");
+		} catch (Error e) {
+			if (e.getClass() == Error.class) // i.e. not a subclass of Error
+				throw new WrongVersionException("Problem in ItemUtil.addGlow(). Probably wrong version.");
+			throw e;
 		}
 	}
 
