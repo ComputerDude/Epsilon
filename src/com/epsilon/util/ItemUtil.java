@@ -1,16 +1,12 @@
 package com.epsilon.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import com.epsilon.exceptions.WrongVersionException;
-
-import net.minecraft.server.v1_11_R1.NBTTagCompound;
-import net.minecraft.server.v1_11_R1.NBTTagList;
 
 public class ItemUtil {
 
@@ -35,30 +31,19 @@ public class ItemUtil {
 	}
 
 	/**
-	 * NMS WARNING MUST USE VERSION 1.11.2
-	 * Use ItemStack itm = ItemUtil.addGlow(itm); not just ItemUtil.addGlow(itm); 
-	 * @param item The itemstack to add glow two.
-	 * @return A itemstack with glow.
+	 * Add a glowing effect to an item stack.
+	 * @param item the item to add the glowing effect to.
+	 * @return a new item with the glowing effect.
 	 */
-	public static ItemStack addGlow(ItemStack item) throws WrongVersionException {
-		try {
-			net.minecraft.server.v1_11_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-			NBTTagCompound tag = null;
-			if (!nmsStack.hasTag()) {
-				tag = new NBTTagCompound();
-				nmsStack.setTag(tag);
-			}
-			if (tag == null)
-				tag = nmsStack.getTag();
-			NBTTagList ench = new NBTTagList();
-			tag.set("ench", ench);
-			nmsStack.setTag(tag);
-			return CraftItemStack.asCraftMirror(nmsStack);
-		} catch (Error e) {
-			if (e.getClass() == Error.class) // i.e. not a subclass of Error
-				throw new WrongVersionException("Problem in ItemUtil.addGlow(). Probably wrong version.");
-			throw e;
-		}
+	public static ItemStack addGlow(ItemStack item) {
+		item = PacketUtil.setItemNBT(item, "ench", new ArrayList<Object>() {{
+			add(new HashMap<String, Object>() {{
+				put("id", (short) 6); // Aqua Affinity
+				put("lvl", (short) 1);
+			}});
+		}});
+		item = PacketUtil.setItemNBT(item, "HideFlags", 63); // Hide the enchantment text
+		return item;
 	}
 
 }
