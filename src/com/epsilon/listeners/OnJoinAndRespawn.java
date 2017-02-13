@@ -2,7 +2,6 @@ package com.epsilon.listeners;
 
 import com.epsilon.constants.EConstants;
 import com.epsilon.player.EPlayer;
-import com.epsilon.util.ColorUtil;
 import com.epsilon.util.LevelUtil;
 import com.epsilon.util.MySQL;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.scoreboard.Team;
+import static com.epsilon.util.ColorUtil.colorf;
 
 public class OnJoinAndRespawn implements Listener {   
 
@@ -23,7 +23,7 @@ public class OnJoinAndRespawn implements Listener {
         EPlayer eplayer = EPlayer.getPlayer(player);
         
         Team t = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(("team"));
-        t.setPrefix(ColorUtil.colorf("&3[&6%s&3] &f", StringUtils.capitalize(eplayer.getRank().name().toLowerCase())));
+        t.setPrefix(colorf("&3[&6%s&3] &f", StringUtils.capitalize(eplayer.getRank().name().toLowerCase())));
         t.addEntry(player.getName());
         
         LevelUtil.setXPBar(player, MySQL.getLevel(player), MySQL.getProperty(player, "exp"));
