@@ -1,6 +1,6 @@
 package com.epsilon.listeners;
 
-import com.epsilon.constants.EConstants;
+import com.epsilon.util.Const;
 import com.epsilon.player.EPlayer;
 import com.epsilon.util.LevelUtil;
 import com.epsilon.util.MySQL;
@@ -28,13 +28,13 @@ public class OnJoinAndRespawn implements Listener {
         
         LevelUtil.setXPBar(player, MySQL.getLevel(player), MySQL.getProperty(player, "exp"));
         if (!player.hasPlayedBefore()) {           
-            player.teleport(EConstants.SPAWN);
+            player.teleport(Const.SPAWN);
         }
     }
     
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {    
-    	e.getPlayer().teleport(EConstants.SPAWN);
+    	e.getPlayer().teleport(Const.SPAWN);
     }
 
 }
