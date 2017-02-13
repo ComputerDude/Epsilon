@@ -53,7 +53,7 @@ public class PacketUtil {
      * @param entity the target entity.
      * @param path the path of the tag to set, separated by periods (eg {@code SpawnPotentials.0.Type})
      * @param value the new value of the tag -- lists are represented by {@code List<?>} and compounds are represented
-     * by {@code Map<String, ?>}. Unexpected things may happen if this argument is null.
+     * by {@code Map<String, ?>}. If this argument is null, remove the tag.
      */
     public static void setEntityNBT(Entity entity, String path, Object value) {
         final net.minecraft.server.v1_11_R1.Entity nmsEntity = ((CraftEntity) entity).getHandle();
@@ -85,7 +85,7 @@ public class PacketUtil {
      * @param path the path of the tag to set, separated by periods, starting from the {@code tag} tag (eg {@code
      * CanDestroy.0})
      * @param value the new value of the tag -- lists are represented by {@code List<?>} and compounds are represented
-     * by {@code Map<String, ?>}. Unexpected things may happen if this argument is null.
+     * by {@code Map<String, ?>}. If this argument is null, remove the tag.
      * @return the new ItemStack.
      */
     public static ItemStack setItemNBT(ItemStack item, String path, Object value) {
@@ -122,13 +122,16 @@ public class PacketUtil {
         for (int i = 0; i < keys.length; i++) {
             if (i == keys.length - 1) {
                 if (target instanceof NBTTagCompound) {
-                    ((NBTTagCompound) target).set(keys[i], toNBTBase(value));
+                    if (value == null) ((NBTTagCompound) target).remove(keys[i]);
+                    else ((NBTTagCompound) target).set(keys[i], toNBTBase(value));
                 } else if (target instanceof NBTTagList) {
                     final int index = Integer.parseInt(keys[i]);
                     if (index == ((NBTTagList) target).size() || index == -1) {
+                        if (value == null) throw new IndexOutOfBoundsException("Cannot remove out-of-bounds item");
                         ((NBTTagList) target).add(toNBTBase(value));
                     } else {
-                        ((NBTTagList) target).a(Integer.parseInt(keys[i]), toNBTBase(value));
+                        if (value == null) ((NBTTagList) target).remove(index);
+                        else ((NBTTagList) target).a(Integer.parseInt(keys[i]), toNBTBase(value));
                     }
                 } else throw new ClassCastException("Not a compound or list");
             } else {
