@@ -1,5 +1,7 @@
 package com.epsilon.item.armor;
 
-public class Chestplate {
+public abstract class Chestplate extends ArmorPiece{
+
+	
 
 }
