@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import static com.epsilon.util.ColorUtil.color;
 import static com.epsilon.util.ColorUtil.colorf;
 
 /**
@@ -133,10 +132,6 @@ public abstract class Mob {
         if (getMaxDamage() <= 0) return;
         final double damage = RAND.nextDouble() * (getMaxDamage() - getMinDamage()) + getMinDamage();
         target.getOnlinePlayer().damage(damage, entity);
-    }
-
-    private static boolean canSpawnAt(Location loc) {
-
     }
 
 }
