@@ -3,10 +3,13 @@ package com.epsilon.mob;
 import java.util.Random;
 
 import com.epsilon.player.EPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.ColorUtil.colorf;
 
 /**
  * This class represents a custom mob in the game.
@@ -18,7 +21,38 @@ public abstract class Mob {
     protected final Entity entity;
     private int health;
 
+    /**
+     * Create the mob at the location specified.
+     */
     protected Mob(EntityType type, Location loc) {
+        entity = loc.getWorld().spawnEntity(loc.getWorld().getHighestBlockAt(loc).getLocation(), type);
+        health = getMaxHealth();
+    }
+
+    /**
+     * Create the mob in a random position within a box around the radius specified.
+     */
+    protected Mob(EntityType type, Location loc, int radius) {
+        findSpawnLocation:
+        {
+            for (int i = 0; i < 256; i++) {
+                loc.setX(loc.getX() + RAND.nextInt(radius * 2 + 1) - radius);
+                loc.setZ(loc.getZ() + RAND.nextInt(radius * 2 + 1) - radius);
+                final Location newLoc = loc.getWorld().getHighestBlockAt(new Location(
+                        loc.getWorld(),
+                        loc.getX() + RAND.nextInt(radius * 2 + 1) - radius,
+                        loc.getY(),
+                        loc.getZ() + RAND.nextInt(radius * 2 + 1) - radius
+                )).getLocation();
+                if (newLoc.getBlockY() > 1) {
+                    loc = newLoc;
+                    break findSpawnLocation; // Who said there was no 'goto' in Java?
+                }
+            }
+            Bukkit.getConsoleSender().sendMessage(colorf(
+                    "&eFailed to spawn a %s mob within %d blocks of (%d, %d, %d) within 256 tries",
+                    getClass().getName(), radius, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+        }
         entity = loc.getWorld().spawnEntity(loc, type);
         health = getMaxHealth();
     }
@@ -101,6 +135,10 @@ public abstract class Mob {
         if (getMaxDamage() <= 0) return;
         final double damage = RAND.nextDouble() * (getMaxDamage() - getMinDamage()) + getMinDamage();
         target.getOnlinePlayer().damage(damage, entity);
+    }
+
+    private static boolean canSpawnAt(Location loc) {
+
     }
 
 }
