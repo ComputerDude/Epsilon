@@ -15,15 +15,15 @@ public abstract class ArmorPiece {
 
 	protected ArmorPiece() {
 
-		if (armor.name().startsWith("DIAMOND")) {
+		if (getMaterial().name().startsWith("DIAMOND")) {
 			this.durability = ThreadLocalRandom.current().nextInt(750, 2250);
-		} else if (armor.name().startsWith("IRON")) {
+		} else if (getMaterial().name().startsWith("IRON")) {
 			this.durability = ThreadLocalRandom.current().nextInt(500, 1500);
-		} else if (armor.name().startsWith("CHAINMAIL")) {
+		} else if (getMaterial().name().startsWith("CHAINMAIL")) {
 			this.durability = ThreadLocalRandom.current().nextInt(250, 750);
-		} else if (armor.name().startsWith("GOLD")) {
+		} else if (getMaterial().name().startsWith("GOLD")) {
 			this.durability = ThreadLocalRandom.current().nextInt(125, 375);
-		} else if (armor.name().startsWith("LEATHER")) {
+		} else if (getMaterial().name().startsWith("LEATHER")) {
 			this.durability = ThreadLocalRandom.current().nextInt(50, 150);
 		}
 	}
