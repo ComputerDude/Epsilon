@@ -36,8 +36,6 @@ public abstract class Mob {
         findSpawnLocation:
         {
             for (int i = 0; i < 256; i++) {
-                loc.setX(loc.getX() + RAND.nextInt(radius * 2 + 1) - radius);
-                loc.setZ(loc.getZ() + RAND.nextInt(radius * 2 + 1) - radius);
                 final Location newLoc = loc.getWorld().getHighestBlockAt(new Location(
                         loc.getWorld(),
                         loc.getX() + RAND.nextInt(radius * 2 + 1) - radius,
