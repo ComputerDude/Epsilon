@@ -9,28 +9,26 @@ import org.bukkit.Material;
  */
 public abstract class ArmorPiece {
 
-	private static Material armor;
-	private static int durability;
+	public abstract Material getMaterial();
 
-	protected ArmorPiece(Material armor) {
-		this.armor = armor;
+	private int durability;
 
-		if (armor.name().contains("DIAMOND")) {
+	protected ArmorPiece() {
+
+		if (armor.name().startsWith("DIAMOND")) {
 			this.durability = ThreadLocalRandom.current().nextInt(750, 2250);
-
-		} else if (armor.name().contains("IRON")) {
+		} else if (armor.name().startsWith("IRON")) {
 			this.durability = ThreadLocalRandom.current().nextInt(500, 1500);
-
-		} else if (armor.name().contains("CHAINMAIL")) {
+		} else if (armor.name().startsWith("CHAINMAIL")) {
 			this.durability = ThreadLocalRandom.current().nextInt(250, 750);
-
-		} else if (armor.name().contains("GOLD")) {
+		} else if (armor.name().startsWith("GOLD")) {
 			this.durability = ThreadLocalRandom.current().nextInt(125, 375);
-
-		} else if (armor.name().contains("LEATHER")) {
+		} else if (armor.name().startsWith("LEATHER")) {
 			this.durability = ThreadLocalRandom.current().nextInt(50, 150);
-
 		}
 	}
 
+	public int getDurability() {
+		return durability;
+	}
 }
