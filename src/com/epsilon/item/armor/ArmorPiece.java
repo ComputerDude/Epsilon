@@ -1,8 +1,7 @@
 package com.epsilon.item.armor;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import org.bukkit.Material;
+import static com.epsilon.util.RandomUtil.randIntTriangular;
 
 /**
  * This class is for creating new Armor
@@ -14,17 +13,16 @@ public abstract class ArmorPiece {
 	private int durability;
 
 	protected ArmorPiece() {
-
 		if (getMaterial().name().startsWith("DIAMOND")) {
-			this.durability = ThreadLocalRandom.current().nextInt(750, 2250);
+			this.durability = randIntTriangular(750, 2251);
 		} else if (getMaterial().name().startsWith("IRON")) {
-			this.durability = ThreadLocalRandom.current().nextInt(500, 1500);
+			this.durability = randIntTriangular(500, 1501);
 		} else if (getMaterial().name().startsWith("CHAINMAIL")) {
-			this.durability = ThreadLocalRandom.current().nextInt(250, 750);
+			this.durability = randIntTriangular(250, 751);
 		} else if (getMaterial().name().startsWith("GOLD")) {
-			this.durability = ThreadLocalRandom.current().nextInt(125, 375);
+			this.durability = randIntTriangular(125, 376);
 		} else if (getMaterial().name().startsWith("LEATHER")) {
-			this.durability = ThreadLocalRandom.current().nextInt(50, 150);
+			this.durability = randIntTriangular(50, 151);
 		}
 	}
 
