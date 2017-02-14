@@ -2,6 +2,8 @@ package com.epsilon.item.weapon;
 
 import static com.epsilon.util.RandomUtil.randIntTriangular;
 
+import java.util.Map;
+
 import org.bukkit.Material;
 
 public abstract class Sword {
@@ -10,6 +12,7 @@ public abstract class Sword {
 	
 	private int durability;
 	private int damage;
+	private int[] minLevel = {1, 30, 60, 90, 120};
 	
 	protected Sword() {
 		
