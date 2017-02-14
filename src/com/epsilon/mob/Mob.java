@@ -3,6 +3,7 @@ package com.epsilon.mob;
 import java.util.Random;
 
 import com.epsilon.player.EPlayer;
+import com.epsilon.util.LevelUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
@@ -55,6 +56,11 @@ public abstract class Mob {
     }
 
     /**
+     * Get the XP multiplier for this mob. 1.0 means normal XP.
+     */
+    public abstract double getXPMultiplier();
+
+    /**
      * Get the {@link Entity} associated with this mob.
      */
     public Entity getEntity() { return entity; }
@@ -76,27 +82,32 @@ public abstract class Mob {
      */
     public void setHealth(int health) {
         this.health = health;
-        if (health <= 0) kill();
+        if (health <= 0) kill(null);
     }
 
     /**
      * Damage this mob.
      * @param damage the amount of damage to deal.
      */
-    public void damage(int damage) {
+    public void damage(int damage, EPlayer damager) {
         health -= damage;
-        if (health <= 0) kill();
+        if (health <= 0) kill(damager);
     }
 
     /**
      * Kill this mob.
      */
-    public void kill() {
+    public void kill(EPlayer killer) {
         health = 0;
         if (entity instanceof Damageable) {
             ((Damageable) entity).setHealth(0);
         } else {
             entity.remove();
+        }
+        if (killer != null) {
+            // TODO Change this algorithm
+            final long toLevelUp = LevelUtil.getTotalXP(killer.getLevel());
+            killer.addXP((long) (toLevelUp / 20 / killer.getLevel() * getXPMultiplier()));
         }
     }
 
