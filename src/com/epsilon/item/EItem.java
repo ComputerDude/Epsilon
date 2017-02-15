@@ -25,14 +25,16 @@ public abstract class EItem {
     private final String name;
     private final int maxDurability;
     private final Material material;
+    private final int buffQuality;
 
     /**
      * Construct a new {@link EItem}, and randomize its buffs.
      */
-    public EItem(String name, Material material, int maxDurability) {
+    public EItem(String name, Material material, int maxDurability, int buffQuality) {
         this.name = name;
         this.material = material;
         this.maxDurability = maxDurability;
+        this.buffQuality = buffQuality;
         durability = getMaxDurability();
         randomizeBuffs();
         item = createItem(getMaterial(), 1, (short) 0, getName());
@@ -59,6 +61,10 @@ public abstract class EItem {
         return maxDurability;
     }
 
+    public int getBuffQuality() {
+        return buffQuality;
+    }
+
     public int getBuff(BuffType type) {
         final Integer value = buffs.get(type);
         return value == null ? 0 : value;
@@ -79,7 +85,7 @@ public abstract class EItem {
         for (BuffType buffType : BuffType.values()) {
             // 20% chance to have this buff
             if (randInt(20) == 0) {
-                setBuff(buffType, randIntNormal(0, 16));
+                setBuff(buffType, randIntNormal(0, buffQuality));
             } else {
                 setBuff(buffType, 0);
             }
