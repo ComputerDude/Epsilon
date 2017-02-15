@@ -10,6 +10,7 @@ import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import static com.epsilon.util.ColorUtil.colorf;
+import static com.epsilon.util.RandomUtil.randDouble;
 
 /**
  * This class represents a custom mob in the game.
@@ -151,7 +152,7 @@ public abstract class Mob {
      */
     public void damagePlayer(EPlayer target) {
         if (getMaxDamage() <= 0) return;
-        final double damage = RAND.nextDouble() * (getMaxDamage() - getMinDamage()) + getMinDamage();
+        final double damage = randDoubleTriangular(getMinDamage(), getMaxDamage());
         target.getOnlinePlayer().damage(damage, entity);
     }
 
