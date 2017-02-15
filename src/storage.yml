@@ -1,4 +1,4 @@
-host: 'localhost'
+host: 'jdbc:mysql://localhost:3306?useSSL=false'
 username: ''
 password: ''
 database-name: 'epsilon'
