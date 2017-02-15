@@ -9,6 +9,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
+
 import static com.epsilon.util.ColorUtil.colorf;
 
 /**
@@ -32,7 +34,7 @@ public abstract class Mob {
     /**
      * Create the mob in a random position within a box around the radius specified.
      */
-    protected Mob(EntityType type, Location loc, int radius) {
+    protected Mob(EntityType type, Location loc, int radius, ItemStack... drops) {
         findSpawnLocation:
         {
             for (int i = 0; i < 256; i++) {
