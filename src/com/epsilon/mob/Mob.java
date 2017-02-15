@@ -9,8 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
-
 import static com.epsilon.util.ColorUtil.colorf;
 
 /**
@@ -23,10 +21,13 @@ public abstract class Mob {
     protected final Entity entity;
     private int health;
 
+    private final MobDrop[] drops;
+
     /**
      * Create the mob at the location specified.
      */
-    protected Mob(EntityType type, Location loc) {
+    protected Mob(EntityType type, Location loc, MobDrop... drops) {
+        this.drops = drops;
         entity = loc.getWorld().spawnEntity(loc.getWorld().getHighestBlockAt(loc).getLocation(), type);
         health = getMaxHealth();
     }
@@ -34,7 +35,7 @@ public abstract class Mob {
     /**
      * Create the mob in a random position within a box around the radius specified.
      */
-    protected Mob(EntityType type, Location loc, int radius, ItemStack... drops) {
+    protected Mob(EntityType type, Location loc, int radius, MobDrop... drops) {
         findSpawnLocation:
         {
             for (int i = 0; i < 256; i++) {
@@ -53,6 +54,7 @@ public abstract class Mob {
                     "&eFailed to spawn a %s mob within %d blocks of (%d, %d, %d) within 256 tries",
                     getClass().getName(), radius, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
         }
+        this.drops = drops;
         entity = loc.getWorld().spawnEntity(loc, type);
         health = getMaxHealth();
     }
@@ -100,6 +102,7 @@ public abstract class Mob {
      * Kill this mob.
      */
     public void kill(EPlayer killer) {
+        if (isDead()) return;
         health = 0;
         if (entity instanceof Damageable) {
             ((Damageable) entity).setHealth(0);
@@ -110,6 +113,11 @@ public abstract class Mob {
             // TODO Change this algorithm
             final long toLevelUp = LevelUtil.getTotalXP(killer.getLevel());
             killer.addXP((long) (toLevelUp / 20 / killer.getLevel() * getXPMultiplier()));
+        }
+        for (MobDrop drop : drops) {
+            for (int i = 0, amount = drop.getDroppedAmount(); i < amount; i++) {
+                entity.getLocation().getWorld().dropItemNaturally(entity.getLocation(), drop.getItem());
+            }
         }
     }
 

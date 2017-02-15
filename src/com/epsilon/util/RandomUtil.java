@@ -77,7 +77,7 @@ public class RandomUtil {
      * @return a pseudorandom number n with a normal distribution with mean {@code mean}, standard deviation {@code
      * stdDev}
      */
-    public static double randDoubleNormal(int mean, int stdDev) {
+    public static double randDoubleNormal(double mean, double stdDev) {
         return RAND.nextGaussian() * stdDev + mean;
     }
 
