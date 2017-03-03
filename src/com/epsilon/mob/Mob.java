@@ -4,15 +4,13 @@ import java.util.Random;
 
 import com.epsilon.player.EPlayer;
 import com.epsilon.util.LevelUtil;
-import com.epsilon.util.RandomUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import static com.epsilon.util.ColorUtil.colorf;
-import static com.epsilon.util.RandomUtil.randDouble;
+import static com.epsilon.util.RandomUtil.randDoubleTriangular;
 
 /**
  * This class represents a custom mob in the game.
@@ -154,7 +152,7 @@ public abstract class Mob {
      */
     public void damagePlayer(EPlayer target) {
         if (getMaxDamage() <= 0) return;
-        final double damage = RandomUtil.randDoubleTriangular(getMinDamage(), getMaxDamage());
+        final double damage = randDoubleTriangular(getMinDamage(), getMaxDamage());
         target.getOnlinePlayer().damage(damage, entity);
     }
 
