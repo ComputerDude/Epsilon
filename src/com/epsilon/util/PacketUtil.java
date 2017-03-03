@@ -158,6 +158,7 @@ public class PacketUtil {
     }
 
     private static Object getNBT(NBTTagCompound root, String path) {
+        if (path.isEmpty()) return toObject(root);
         NBTBase target = root;
         for (String key : path.split("\\.")) {
             if (target instanceof NBTTagCompound) {

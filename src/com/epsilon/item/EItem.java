@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.epsilon.util.Lazy;
+import com.epsilon.util.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -17,12 +19,41 @@ import static com.epsilon.util.RandomUtil.randIntNormal;
 /**
  * Represents a weapon or a piece of armour.
  */
-public abstract class EItem {
+public class EItem {
 
     private Map<BuffType, Integer> buffs = new HashMap<>();
     private Map<RequirementType, Object> requirements = new HashMap<>();
     private int durability;
-    private ItemStack item;
+    private final Lazy<ItemStack> item = new Lazy<ItemStack>() {
+        @Override
+        public ItemStack compute() {
+            final ItemStack item = createItem(material, 1, (short) 0, name);
+            final ItemMeta meta = item.getItemMeta();
+            final List<String> lore = new ArrayList<>();
+            if (!requirements.isEmpty()) {
+                lore.add("");
+                for (RequirementType type : RequirementType.values()) { // So that they are always in the same order
+                    if (requirements.containsKey(type)) {
+                        final String value = requirements.get(type).toString();
+                        lore.add(colorf("&e%s: %s", type.getName(), value));
+                    }
+                }
+            }
+            if (!buffs.isEmpty()) {
+                lore.add("");
+                for (BuffType type : BuffType.values()) { // So that the buffs are always in the same order
+                    if (buffs.containsKey(type)) {
+                        final int value = buffs.get(type);
+                        lore.add(colorf(value <= buffQuality * 3 / 4 ? "&4%d%s %s" : value < 0 ? "&c%d%s %s" : value
+                                < 20 ? "&a%d%s %s" : "&2%d%s %s", value, type.getUnit(), type.getName()));
+                    }
+                }
+            }
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            return item;
+        }
+    };
     private final String name;
     private final int maxDurability;
     private final Material material;
@@ -38,18 +69,49 @@ public abstract class EItem {
         this.buffQuality = buffQuality;
         durability = getMaxDurability();
         randomizeBuffs();
-        item = createItem(getMaterial(), 1, (short) 0, getName());
-        updateLore();
+    }
+
+    public Map<String, Object> serialize() {
+        final Map<String, Object> root = new HashMap<>();
+        root.put("durability", durability);
+        root.put("name", name);
+        root.put("maxDurability", maxDurability);
+        root.put("material", material.name());
+        root.put("buffQuality", buffQuality);
+        final Map<String, Integer> buffs = new HashMap<>();
+        for (Map.Entry<BuffType, Integer> entry : this.buffs.entrySet()) {
+            buffs.put(entry.getKey().name(), entry.getValue());
+        }
+        root.put("buffs", buffs);
+        final Map<String, Object> requirements = new HashMap<>();
+        for (Map.Entry<RequirementType, Object> entry : this.requirements.entrySet()) {
+            requirements.put(entry.getKey().name(), entry.getValue());
+        }
+        root.put("requirements", requirements);
+        return root;
     }
 
     /**
-     * Turn an ItemStack into an EItem. If the ItemStack is invalid, {@code null} is returned.
+     * Deserialize an ItemStack into an EItem. If the ItemStack is invalid, {@code null} is returned.
      */
     public static EItem fromItemStack(ItemStack item) {
         try {
-
-        } catch (NumberFormatException e) {
-            return null;
+            // Me being as safe<?> as possible
+            final Map<?, ?> root = (Map<?, ?>) PacketUtil.getItemNBT(item, "epsilon");
+            if (root == null) {
+                // No 'epsilon' tag
+                return null;
+            }
+            final EItem eitem = new EItem((String) root.get("name"), Material.valueOf((String) root.get("material")),
+                    (Integer) root.get("maxDurability"), (Integer) root.get("buffQuality"));
+            eitem.durability = (Integer) root.get("durability");
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>) root.get("buffs")).entrySet()) {
+                eitem.buffs.put(BuffType.valueOf((String) entry.getKey()), (Integer) entry.getValue());
+            }
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>) root.get("requirements")).entrySet()) {
+                eitem.requirements.put(RequirementType.valueOf((String) entry.getKey()), entry.getValue());
+            }
+            return eitem;
         } catch (Exception e) {
             Bukkit.getConsoleSender().sendMessage(colorf("&c[EItem] [fromItemStack] While parsing item %s: %s: %s",
                     item, e.getClass().getName(), e.getMessage()));
@@ -70,7 +132,7 @@ public abstract class EItem {
     }
 
     public ItemStack getItemStack() {
-        return item;
+        return item.get();
     }
 
     public int getMaxDurability() {
@@ -125,31 +187,16 @@ public abstract class EItem {
         requirements.clear();
     }
 
+    public void updateItem() {
+        item.invalidate();
+    }
+
+    /**
+     * @deprecated Use {@link #updateItem()}
+     */
+    @Deprecated
     public void updateLore() {
-        final List<String> lore = new ArrayList<>();
-        lore.add()
-        if (!requirements.isEmpty()) {
-            for (RequirementType type : RequirementType.values()) { // So that they are always in the same order
-                if (requirements.containsKey(type)) {
-                    final String value = requirements.get(type).toString();
-                    lore.add(colorf("&e%s: %s", type.getName(), value));
-                }
-            }
-            lore.add("");
-        }
-        if (!buffs.isEmpty()) {
-            for (BuffType type : BuffType.values()) { // So that the buffs are always in the same order
-                if (buffs.containsKey(type)) {
-                    final int value = buffs.get(type);
-                    lore.add(colorf(value <= 20 ? "&4%d%s %s" : value < 0 ? "&c%d%s %s" : value < 20 ? "&a%d%s %s"
-                            : "&2%d%s %s", value, type.getUnit(), type.getName()));
-                }
-            }
-            lore.add("");
-        }
-        final ItemMeta meta = item.getItemMeta();
-        meta.setLore(lore);
-        item.setItemMeta(meta);
+        updateItem();
     }
 
     @Override

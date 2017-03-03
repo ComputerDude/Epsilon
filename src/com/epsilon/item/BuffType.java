@@ -1,18 +1,18 @@
 package com.epsilon.item;
 
+import java.util.Arrays;
+
 public enum BuffType {
 
-    REGENERATION("%", "Regeneration", 'r'), STRENGTH("%", "Strength", 's'), RESISTANCE("%", "Resistance", 'R'), SPEED
-            ("%", "Speed", 'S');
+    REGENERATION("%", "Regeneration"), STRENGTH("%", "Strength"), RESISTANCE("%", "Resistance"), SPEED
+            ("%", "Speed");
 
     private final String unit;
     private final String name;
-    private final char id;
 
-    BuffType(final String unit, final String name, char id) {
+    BuffType(final String unit, final String name) {
         this.name = name;
         this.unit = unit;
-        this.id = id;
     }
 
     public String getUnit() {
@@ -23,15 +23,12 @@ public enum BuffType {
         return name;
     }
 
-    public char getID() {
-        return id;
+    public int getID() {
+        return Arrays.binarySearch(values(), this);
     }
 
-    public static BuffType fromID(char id) {
-        for (BuffType type : values()) {
-            if (type.id == id) return type;
-        }
-        return null;
+    public static BuffType fromID(int id) {
+        return values()[id];
     }
 
 }
