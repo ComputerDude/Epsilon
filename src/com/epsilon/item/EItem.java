@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -39,6 +40,21 @@ public abstract class EItem {
         randomizeBuffs();
         item = createItem(getMaterial(), 1, (short) 0, getName());
         updateLore();
+    }
+
+    /**
+     * Turn an ItemStack into an EItem. If the ItemStack is invalid, {@code null} is returned.
+     */
+    public static EItem fromItemStack(ItemStack item) {
+        try {
+
+        } catch (NumberFormatException e) {
+            return null;
+        } catch (Exception e) {
+            Bukkit.getConsoleSender().sendMessage(colorf("&c[EItem] [fromItemStack] While parsing item %s: %s: %s",
+                    item, e.getClass().getName(), e.getMessage()));
+            return null;
+        }
     }
 
     public String getName() {
@@ -111,17 +127,17 @@ public abstract class EItem {
 
     public void updateLore() {
         final List<String> lore = new ArrayList<>();
+        lore.add()
         if (!requirements.isEmpty()) {
-            lore.add("");
             for (RequirementType type : RequirementType.values()) { // So that they are always in the same order
                 if (requirements.containsKey(type)) {
                     final String value = requirements.get(type).toString();
                     lore.add(colorf("&e%s: %s", type.getName(), value));
                 }
             }
+            lore.add("");
         }
         if (!buffs.isEmpty()) {
-            lore.add("");
             for (BuffType type : BuffType.values()) { // So that the buffs are always in the same order
                 if (buffs.containsKey(type)) {
                     final int value = buffs.get(type);
@@ -129,6 +145,7 @@ public abstract class EItem {
                             : "&2%d%s %s", value, type.getUnit(), type.getName()));
                 }
             }
+            lore.add("");
         }
         final ItemMeta meta = item.getItemMeta();
         meta.setLore(lore);

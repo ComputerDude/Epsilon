@@ -1,5 +1,5 @@
-**Lore**
-------------------------
+# Lore
+
 It is said that during the time of medieval warfare in our world, there was another world, known as Epsilon. People say that for a hundred generations, Epsilon was at peace. But peace doesn't last forever. Epsilon was run by the direct descendants of Gabriel Adams, the man who ended the deadly civil wars, and brought order to Epsilon.  After over three millenniums of peace, there were 3 new descendants, Nagem, whose creativity brought life wherever she would go, Leinad, whose courage beat that of a lion, and finally, Nitsuj, whose strength stroke fear in the eyes of his enemies. Nitsuj, Nagem and Leinad had a friend who they spent a considerable amount of time with, named Nedyah, whose intuition was far greater than anyone of that age.
 
 These four people sought to create their own lands, and so they did. The father of the three siblings granted them an enormous island to the north, with 2 smaller, but still large, islands on each side. On the north half of the mainland, Nedyah built the land of Zago. On the south half, Nagem built the land of Fayin. On the northwestern island, Leinad built the land of Tharin, and on the southeastern island, Nitsuj built the land of Portan. In the center of the mainland, they created fort one, which they used as their meeting grounds. Over time, these four lands thrived, especially Portan.
