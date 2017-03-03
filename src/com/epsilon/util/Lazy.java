@@ -18,7 +18,10 @@ public abstract class Lazy<T> {
      * will be computed again.
      */
     public T get() {
-        if (!hasValue) value = compute();
+        if (!hasValue) {
+            value = compute();
+            hasValue = true;
+        }
         return value;
     }
 
