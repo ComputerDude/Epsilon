@@ -3,11 +3,12 @@ package com.epsilon.gui;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.Plugin;
+import static com.epsilon.util.I18n.tl;
 
 public class AdminPanelGUI extends GUI {
 
     public AdminPanelGUI(Plugin plugin, Player player) {
-        super(plugin, player, "Admin Panel", 54);
+        super(plugin, player, tl("admin-panel.title"), 54);
     }
 
     protected AdminPanelGUI(Plugin plugin, Player player, String name, int slots) {

@@ -1,5 +1,7 @@
 package com.epsilon.ranks;
 
+import static com.epsilon.util.I18n.tlc;
+
 public enum Rank {
 
 	//Staff ranks have a 100 Gap. If we ever add a rank between others, add 50, and 25 after that.
@@ -14,6 +16,10 @@ public enum Rank {
 
     public int getLevel() {
         return level;
+    }
+
+    public String getName() {
+	    return tlc("player.rank." + name().toLowerCase()); // TODO Make this a constructor parameter
     }
 
 }

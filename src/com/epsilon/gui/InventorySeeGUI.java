@@ -6,7 +6,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import static com.epsilon.util.ColorUtil.color;
+import static com.epsilon.util.I18n.tlc;
+import static com.epsilon.util.I18n.tlf;
 import static com.epsilon.util.ItemUtil.createItem;
 
 public class InventorySeeGUI extends GUI {
@@ -14,7 +15,7 @@ public class InventorySeeGUI extends GUI {
     private final Player target;
 
     public InventorySeeGUI(Plugin plugin, Player player, Player target) {
-        super(plugin, player, "Inventory of " + target.getName(), 45);
+        super(plugin, player, tlf("inventory-see.title", target.getName()), 45);
         this.target = target;
     }
 
@@ -29,7 +30,7 @@ public class InventorySeeGUI extends GUI {
         System.arraycopy(target.getInventory().getContents(), 0, items, 0, 36);
         System.arraycopy(target.getInventory().getArmorContents(), 0, items, 36, 4);
         items[40] = target.getInventory().getItemInOffHand();
-        items[44] = createItem(Material.BOOK, 1, (short) 0, color("&bRefresh"));
+        items[44] = createItem(Material.BOOK, 1, (short) 0, tlc("inventory-see.refresh"));
         inventory.setContents(items);
     }
 

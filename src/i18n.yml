@@ -1,0 +1,28 @@
+command:
+  no-permission: "&cYou don't have permission to do that!"
+  player-only: '&cOnly in-game players can do that!'
+admin-panel:
+  title: 'Admin Panel'
+inventory-see:
+  title: 'Inventory of %s'
+  refresh: '&bRefresh'
+item:
+  buff:
+    regeneration: 'Regeneration'
+    strength: 'Strength'
+    resistance: 'Resistance'
+    speed: 'Speed'
+  requirement:
+    level: 'Level Req'
+player:
+  rank:
+    default: 'Default'
+    trial: 'Trial'
+    moderator: 'Moderator'
+    art: 'Artist'
+    dev: 'Developer'
+    admin: 'Admin'
+    owner: 'Owner'
+  you-died: '&c&lYou died!'
+  teleported-to-spawn: '&cYou have been teleported to spawn.'
+  name-tag-prefix: '&3[&6%s&3] &f'

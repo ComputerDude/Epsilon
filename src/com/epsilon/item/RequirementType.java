@@ -1,8 +1,10 @@
 package com.epsilon.item;
 
+import static com.epsilon.util.I18n.tl;
+
 public enum RequirementType {
 
-    LEVEL("Level Req");
+    LEVEL("item.requirement.level");
 
     private final String name;
 
@@ -11,7 +13,7 @@ public enum RequirementType {
     }
 
     public String getName() {
-        return name;
+        return tl(name);
     }
 
 }

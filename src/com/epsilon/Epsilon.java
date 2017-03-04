@@ -1,5 +1,6 @@
 package com.epsilon;
 
+import com.epsilon.util.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.plugin.PluginManager;
@@ -36,6 +37,7 @@ public class Epsilon extends JavaPlugin {
     	instance = this;
         storageFile = new PluginFile(this, "storage.yml", "storage.yml");
         adminModeConfig = new PluginFile(this, "admin-mode.yml");
+        I18n.setConfig(new PluginFile(this, "i18n.yml", "i18n.yml"));
         final PluginManager pm = Bukkit.getServer().getPluginManager();
         
         pm.registerEvents(new OnJoinAndRespawn(), this);

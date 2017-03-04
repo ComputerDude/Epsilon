@@ -14,8 +14,8 @@ public class OnInteractEntity implements Listener {
     public void onInteractEntity(PlayerInteractEntityEvent e) {
         if (e.getRightClicked() instanceof Player) {
             if (AdminModeManager.isAdminModeEnabled(e.getPlayer())) {
-                final InventorySeeGUI gui = new InventorySeeGUI(Epsilon.getInstance(), e.getPlayer(),
-                        (Player) e.getRightClicked());
+                final InventorySeeGUI gui = new InventorySeeGUI(Epsilon.getInstance(), e.getPlayer(), (Player) e
+                        .getRightClicked());
                 gui.init();
                 gui.open();
             }

@@ -2,10 +2,14 @@ package com.epsilon.item;
 
 import java.util.Arrays;
 
+import static com.epsilon.util.I18n.tl;
+
 public enum BuffType {
 
-    REGENERATION("%", "Regeneration"), STRENGTH("%", "Strength"), RESISTANCE("%", "Resistance"), SPEED
-            ("%", "Speed");
+    REGENERATION("%", "item.buff.regeneration"),
+    STRENGTH("%", "item.buff.strength"),
+    RESISTANCE("%", "item.buff.resistance"),
+    SPEED("%", "item.buff.speed");
 
     private final String unit;
     private final String name;
@@ -20,7 +24,7 @@ public enum BuffType {
     }
 
     public String getName() {
-        return name;
+        return tl(name);
     }
 
     public int getID() {
