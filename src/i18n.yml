@@ -1,6 +1,12 @@
 command:
   no-permission: "&cYou don't have permission to do that!"
   player-only: '&cOnly in-game players can do that!'
+  player-not-found: '&cPlayer not found!'
+  gamemode:
+    success: "&aSet %s's game mode to %s."
+  getcoins:
+    syntax: '&c/%s [player]'
+    success: '&a%s has %,d coins.'
 admin-panel:
   title: 'Admin Panel'
 inventory-see:

@@ -6,8 +6,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import static com.epsilon.util.ColorUtil.color;
-import static com.epsilon.util.ColorUtil.colorf;
+import static com.epsilon.util.I18n.tlc;
+import static com.epsilon.util.I18n.tlcf;
 
 public class CmdGameMode implements CommandExecutor {
 
@@ -23,18 +23,18 @@ public class CmdGameMode implements CommandExecutor {
         if (args.length > 0) {
             target = Bukkit.getPlayer(args[0]);
             if (target == null) {
-                sender.sendMessage(color("&4Player not found!"));
+                sender.sendMessage(tlc("command.player-not-found"));
                 return true;
             }
         } else {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(color("&4You must choose whose game mode to change!"));
+                sender.sendMessage(tlc("command.player-only"));
                 return true;
             }
             target = (Player) sender;
         }
         target.setGameMode(mode);
-        sender.sendMessage(colorf("&aSet %s's game mode to %s.", target.getName(), mode.name().toLowerCase()));
+        sender.sendMessage(tlcf("command.gamemode.success", target.getName(), mode.name().toLowerCase()));
         return true;
     }
 

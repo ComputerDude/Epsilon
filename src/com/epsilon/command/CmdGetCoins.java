@@ -8,27 +8,27 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import static com.epsilon.util.ColorUtil.color;
-import static com.epsilon.util.ColorUtil.colorf;
+import static com.epsilon.util.I18n.tlc;
+import static com.epsilon.util.I18n.tlcf;
 
 public class CmdGetCoins implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length > 1) {
-            sender.sendMessage(colorf("&4/%s [player]", label));
+            sender.sendMessage(tlcf("command.getcoins.syntax", label));
             return true;
         }
         final Player target;
         if (args.length == 1) {
             target = Bukkit.getPlayer(args[0]);
             if (target == null) {
-                sender.sendMessage(color("&4Player not found!"));
+                sender.sendMessage(tlc("command.player-not-found"));
                 return true;
             }
         } else {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(color("&4You must choose whose balance to get!"));
+                sender.sendMessage(tlc("command.player-only"));
                 return true;
             }
             target = (Player) sender;
@@ -40,7 +40,7 @@ public class CmdGetCoins implements CommandExecutor {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        sender.sendMessage(colorf("&a%s has %,d coins.", target.getName(), coins));
+                        sender.sendMessage(tlcf("command.getcoins.success", target.getName(), coins));
                     }
                 }.runTask(Epsilon.getInstance());
             }
