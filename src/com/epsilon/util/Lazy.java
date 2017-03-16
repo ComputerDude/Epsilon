@@ -14,8 +14,8 @@ public abstract class Lazy<T> {
     public abstract T compute();
 
     /**
-     * Get the value of this lazy variable. If it has not yet been computed, or it has been invalidated, the value
-     * will be computed again.
+     * Get the value of this lazy variable. If it has not yet been computed, or it has been invalidated, the
+     * {@link #compute()} method will be called.
      */
     public T get() {
         if (!hasValue) {
