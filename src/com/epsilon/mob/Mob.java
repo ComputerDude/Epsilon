@@ -61,6 +61,11 @@ public abstract class Mob {
     }
 
     /**
+     * Get the name of the mob, shown as the name tag above it.
+     */
+    public abstract String getName();
+
+    /**
      * Get the XP multiplier for this mob. 1.0 means normal XP.
      */
     public abstract double getXPMultiplier();
@@ -112,8 +117,9 @@ public abstract class Mob {
         }
         if (killer != null) {
             // TODO Change this algorithm
+            // Changed, but still needs changing.
             final long toLevelUp = LevelUtil.getTotalXP(killer.getLevel());
-            killer.addXP((long) (toLevelUp / 20 / killer.getLevel() * getXPMultiplier()));
+            killer.addXP((long) (toLevelUp / 20.0 / Math.sqrt(killer.getLevel()) * getXPMultiplier()));
         }
         for (MobDrop drop : drops) {
             for (int i = 0, amount = drop.getDroppedAmount(); i < amount; i++) {

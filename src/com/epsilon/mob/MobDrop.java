@@ -2,6 +2,7 @@ package com.epsilon.mob;
 
 import org.bukkit.inventory.ItemStack;
 import static com.epsilon.util.RandomUtil.randDoubleNormal;
+import static com.epsilon.util.RandomUtil.random;
 
 public class MobDrop {
 
@@ -38,7 +39,10 @@ public class MobDrop {
      * pseudorandom number generation.
      */
     public int getDroppedAmount() {
-        return (int) randDoubleNormal(quantityMean, quantityStdDev);
+        if (random() >= probability) return 0;
+        final int amount = (int) randDoubleNormal(quantityMean, quantityStdDev);
+        if (amount <= 0) return 0;
+        return amount;
     }
 
 }
