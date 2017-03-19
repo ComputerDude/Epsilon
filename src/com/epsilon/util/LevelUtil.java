@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 
 public class LevelUtil {
 
-    /** @return {@code base} to the power of {@code exp}, rounded to the nearest integer */
-    private static long pow(double base, double exp) {
-        return (int) Math.round(Math.pow(base, exp));
+    /** @return {@code base} to the power of {@code xp}, rounded to the nearest integer */
+    private static long pow(double base, double xp) {
+        return (int) Math.round(Math.pow(base, xp));
     }
 
     /** Return the amount of XP required to level up from level {@code (level)} to level {@code (level + 1)}. */

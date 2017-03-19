@@ -51,7 +51,7 @@ public class CmdSetLevel implements CommandExecutor {
             @Override
             public void run() {
                 MySQL.setProperty(target, "level", level);
-                MySQL.setProperty(target, "exp", xp);
+                MySQL.setProperty(target, "xp", xp);
                 new BukkitRunnable(){
                     @Override
                     public void run() {

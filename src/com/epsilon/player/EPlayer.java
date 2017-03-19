@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.epsilon.Epsilon;
 import com.epsilon.ranks.Rank;
-import com.epsilon.util.ColorUtil;
 import com.epsilon.util.LevelUtil;
 import com.epsilon.util.MySQL;
 import org.bukkit.OfflinePlayer;
@@ -31,6 +30,7 @@ public class EPlayer {
     private final OfflinePlayer player;
     private int level = -1;
     private long xp = -1;
+    private Rank rank = Rank.DEFAULT;
 
     /**
      * @deprecated This constructor should be private--other classes, use {@link #getPlayer()}
@@ -42,42 +42,25 @@ public class EPlayer {
             @Override
             public void run() {
                 final int level = MySQL.getProperty(player, "level");
-                final long xp = MySQL.getProperty(player, "exp");
+                final long xp = MySQL.getProperty(player, "xp");
+                final Integer ranklevel = MySQL.getProperty(player, "rank");
+                final Rank rank;
+                if (ranklevel == null) rank = null;
+                else rank = Rank.fromLevel(ranklevel);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         EPlayer.this.level = level;
                         EPlayer.this.xp = xp;
+                        EPlayer.this.rank = rank == null ? Rank.DEFAULT : rank;
                     }
                 }.runTask(Epsilon.getInstance());
             }
         }.runTaskAsynchronously(Epsilon.getInstance());
     }
 
-    /**
-     * @deprecated I told you not to put this
-     */
-    @Deprecated
-    public static Rank getRank(Player player) {
-        return EPlayer.getPlayer(player).getRank();
-    }
-
-    /**
-     * <b>Queries MySQL, please run asynchronously.</b>
-     */
     public Rank getRank() {
-        Integer rank = MySQL.getProperty(player.getUniqueId(), "rank");
-        if (rank == null) {
-            return Rank.DEFAULT;
-        } else {
-            for (Rank r : Rank.values()) {
-                if (r.getLevel() == rank) return r;
-            }
-            if (player.isOnline())
-                ((Player) player).kickPlayer(ColorUtil.color("&cAn error occured when loading your rank. Please " +
-                        "contact an administrator."));
-            return Rank.DEFAULT;
-        }
+        return rank;
     }
 
     public OfflinePlayer getPlayer() {

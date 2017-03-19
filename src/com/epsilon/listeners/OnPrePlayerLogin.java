@@ -25,7 +25,7 @@ public class OnPrePlayerLogin implements Listener {
                 MySQL.setProperty(e.getUniqueId(), "player", e.getName());
             } else {
                 PreparedStatement sql = MySQL.getConnection().prepareStatement("INSERT INTO `player_data` VALUES(?, " +
-                        "?, DEFAULT, DEFAULT, DEFAULT);");
+                        "?, DEFAULT, DEFAULT, DEFAULT, DEFAULT);");
                 sql.setString(1, e.getUniqueId().toString());
                 sql.setString(2, e.getName());
                 sql.execute();

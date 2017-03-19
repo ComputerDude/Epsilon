@@ -18,6 +18,13 @@ public enum Rank {
         return level;
     }
 
+    public static Rank fromLevel(int level) {
+	    for (Rank rank : values()) {
+	        if (rank.level == level) return rank;
+        }
+        return null;
+    }
+
     public String getName() {
 	    return tlc("player.rank." + name().toLowerCase()); // TODO Make this a constructor parameter
     }

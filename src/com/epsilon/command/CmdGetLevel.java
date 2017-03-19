@@ -41,13 +41,13 @@ public class CmdGetLevel implements CommandExecutor {
             @Override
             public void run() {
                 final int level = MySQL.getProperty(target, "level");
-                final long exp = MySQL.getProperty(target, "exp");
-                final long totalExp = LevelUtil.getXP(level);
+                final long xp = MySQL.getProperty(target, "xp");
+                final long totalxp = LevelUtil.getXP(level);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         sender.sendMessage(colorf("&a%s is level %d with %,d/%,d (%.3f%%) experience.",
-                                target.getName(), level, exp, totalExp, 100.0 * exp / totalExp));
+                                target.getName(), level, xp, totalxp, 100.0 * xp / totalxp));
                     }
                 }.runTask(Epsilon.getInstance());
             }

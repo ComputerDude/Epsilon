@@ -48,7 +48,8 @@ public class MySQL {
                     "player VARCHAR(16) NOT NULL,\n" + // Cached player name
                     "coins BIGINT NOT NULL DEFAULT 0,\n" + // Coins
                     "level INT NOT NULL DEFAULT 1,\n" + // Level
-                    "exp BIGINT NOT NULL DEFAULT 0);" // Experience
+                    "xp BIGINT NOT NULL DEFAULT 0,\n" + // Experience
+                    "rank INT NULL DEFAULT 0);" // Rank
             );
             statement.execute();
             statement.close();
