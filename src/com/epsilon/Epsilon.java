@@ -24,7 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Main class of the plugin. (Extends {@link JavaPlugin})
  *
- * @author Multible Authors
+ * @author Multiple Authors
  */
 public class Epsilon extends JavaPlugin {
 
