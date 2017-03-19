@@ -7,20 +7,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import com.epsilon.Epsilon;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import static com.epsilon.util.ColorUtil.colorf;
 
 public class MySQL {
 
-    public static Connection con;
+    private static Connection con;
 
-    public static String host = Epsilon.storageFile.getString("host");
-    public static String username = Epsilon.storageFile.getString("username");
-    public static String password = Epsilon.storageFile.getString("password");
-    public static String databaseName = Epsilon.storageFile.getString("database-name");
+    private static String host;
+    private static String username;
+    private static String password;
+    private static String databaseName;
+    private static YamlConfiguration config;
+
+    public static void setConfig(YamlConfiguration config) {
+        MySQL.config = config;
+        if (config != null) {
+            host = config.getString("host");
+            username = config.getString("username");
+            password = config.getString("password");
+            databaseName = config.getString("database-name");
+        }
+    }
 
     /**
      * Create the tables if necessary. Will not create the database (TODO I can't figure out how to do that
@@ -160,5 +171,9 @@ public class MySQL {
 
     public static void setLevel(Player player, int level) {
         setProperty(player, "level", level);
+    }
+
+    public static Connection getConnection() {
+        return con;
     }
 }

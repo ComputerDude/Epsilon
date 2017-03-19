@@ -1,39 +1,44 @@
 package com.epsilon.administration;
 
+import com.epsilon.util.PluginFile;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.epsilon.Epsilon;
-
 public class AdminModeManager {
+
+	private static PluginFile config;
+
+	public static void setConfig(PluginFile config) {
+		AdminModeManager.config = config;
+	}
 
 	public static void toggleAdminMode(Player player) {
 
-		if (Epsilon.adminModeConfig.getBoolean("player." + player.getUniqueId() + ".adminMode")) {
-			if (Epsilon.adminModeConfig.get("player." + player.getUniqueId() + ".adminModeInv") != null) {
+		if (config.getBoolean("player." + player.getUniqueId() + ".adminMode")) {
+			if (config.get("player." + player.getUniqueId() + ".adminModeInv") != null) {
 				player.getInventory().setContents(
-						(ItemStack[]) Epsilon.adminModeConfig.get("player." + player.getUniqueId() + ".adminModeInv"));
+						(ItemStack[]) config.get("player." + player.getUniqueId() + ".adminModeInv"));
 			} else {
 				player.getInventory().clear();
 			}
-			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminMode", false);
-			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminModeInv", null);
-			Epsilon.adminModeConfig.save();
-			Epsilon.adminModeConfig.reload();
+			config.set("player." + player.getUniqueId() + ".adminMode", false);
+			config.set("player." + player.getUniqueId() + ".adminModeInv", null);
+			config.save();
+			config.reload();
 		} else {
-			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminModeInv",
+			config.set("player." + player.getUniqueId() + ".adminModeInv",
 					player.getInventory().getContents());
 
 			player.getInventory().clear(); // Use #clear() method instead. - JustBru00
 
-			Epsilon.adminModeConfig.set("player." + player.getUniqueId() + ".adminMode", true);
-			Epsilon.adminModeConfig.save();
-			Epsilon.adminModeConfig.reload();
+			config.set("player." + player.getUniqueId() + ".adminMode", true);
+			config.save();
+			config.reload();
 		}
 	}
 
 	public static boolean isAdminModeEnabled(Player player) {
-		return Epsilon.adminModeConfig.getBoolean("player." + player.getUniqueId() + ".adminMode");
+		return config.getBoolean("player." + player.getUniqueId() + ".adminMode");
 	}
 
 }

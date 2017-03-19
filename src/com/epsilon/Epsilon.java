@@ -1,5 +1,6 @@
 package com.epsilon;
 
+import com.epsilon.administration.AdminModeManager;
 import com.epsilon.chat.PlayerChat;
 import com.epsilon.command.CmdAdminMode;
 import com.epsilon.command.CmdGameMode;
@@ -28,16 +29,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Epsilon extends JavaPlugin {
 
-    public static PluginFile storageFile = null;
-    public static PluginFile adminModeConfig = null;
     public static Epsilon instance;
 
     @Override
     public void onEnable() {
         long startTime = System.nanoTime();
         instance = this;
-        storageFile = new PluginFile(this, "storage.yml", "storage.yml");
-        adminModeConfig = new PluginFile(this, "admin-mode.yml");
+        AdminModeManager.setConfig(new PluginFile(this, "admin-mode.yml"));
         I18n.setConfig(new PluginFile(this, "i18n.yml", "i18n.yml"));
         getLogger().info("Registering listeners...");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
@@ -59,6 +57,7 @@ public class Epsilon extends JavaPlugin {
         getCommand("gma").setExecutor(new CmdGameMode(GameMode.ADVENTURE));
         getCommand("gmsp").setExecutor(new CmdGameMode(GameMode.SPECTATOR));
         getLogger().info("Initializing MySQL...");
+        MySQL.setConfig(new PluginFile(this, "storage.yml", "storage.yml"));
         MySQL.createTables();
         getLogger().info(String.format("Epsilon has been enabled in %,.6fs.", (System.nanoTime() - startTime) / 1e9));
     }
@@ -67,8 +66,11 @@ public class Epsilon extends JavaPlugin {
     public void onDisable() {
         long startTime = System.nanoTime();
         instance = null;
+        AdminModeManager.setConfig(null);
+        I18n.setConfig(null);
         getLogger().info("Disconnecting MySQL...");
         MySQL.disconnect();
+        MySQL.setConfig(null);
         getLogger().info(String.format("Epsilon has been disabled in %,.6fs.", (System.nanoTime() - startTime) / 1e9));
     }
 
