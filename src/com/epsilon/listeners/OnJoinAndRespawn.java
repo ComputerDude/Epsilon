@@ -33,7 +33,7 @@ public class OnJoinAndRespawn implements Listener {
         t.addEntry(player.getName());
         
         LevelUtil.setXPBar(player, MySQL.getLevel(player), MySQL.getProperty(player, "xp"));
-        if (!player.hasPlayedBefore()) {           
+        if (!player.hasPlayedBefore()) {
             player.teleport(Const.SPAWN);
         }
     }
