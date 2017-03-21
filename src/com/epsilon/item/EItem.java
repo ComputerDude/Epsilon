@@ -9,6 +9,7 @@ import com.epsilon.util.Lazy;
 import com.epsilon.util.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import static com.epsilon.util.ColorUtil.colorf;
@@ -19,7 +20,7 @@ import static com.epsilon.util.RandomUtil.randIntNormal;
 /**
  * Represents a weapon or a piece of armour.
  */
-public class EItem {
+public class EItem implements ConfigurationSerializable {
 
     private Map<BuffType, Integer> buffs = new HashMap<>();
     private Map<RequirementType, Object> requirements = new HashMap<>();
