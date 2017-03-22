@@ -92,6 +92,19 @@ public class EItem implements ConfigurationSerializable {
         return root;
     }
 
+    public static EItem deserialize(Map<String, Object> map) {
+        final EItem item = new EItem((String) map.get("name"), Material.valueOf((String) map.get("material")),
+                (Integer) map.get("maxDurability"), (Integer) map.get("buffQuality"));
+        item.durability = (Integer) map.get("durability");
+        for (Map.Entry<?, ?> entry : ((Map<?, ?>) map.get("buffs")).entrySet()) {
+            item.buffs.put(BuffType.valueOf((String) entry.getKey()), (Integer) entry.getValue());
+        }
+        for (Map.Entry<?, ?> entry : ((Map<?, ?>) map.get("requirements")).entrySet()) {
+            item.requirements.put(RequirementType.valueOf((String) entry.getKey()), entry.getValue());
+        }
+        return item;
+    }
+
     /**
      * Deserialize an ItemStack into an EItem. If the ItemStack is invalid, {@code null} is returned.
      */
