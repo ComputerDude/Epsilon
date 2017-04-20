@@ -59,7 +59,7 @@ public class Epsilon extends JavaPlugin {
         getLogger().info("Initializing MySQL...");
         MySQL.setConfig(new PluginFile(this, "storage.yml", "storage.yml"));
         MySQL.createTables();
-        getLogger().info(String.format("Epsilon has been enabled in %,.6fs.", (System.nanoTime() - startTime) / 1e9));
+        getLogger().info(String.format("Enabled in %,.6fms.", (System.nanoTime() - startTime) / 1e6));
     }
 
     @Override
